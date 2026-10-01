@@ -1,0 +1,5 @@
+# LeetCode solved / available statistics
+
+Preserve the existing four-column grid and activity heatmap. Replace the straight proportion bar and divider with one semicircular progress arc above each column. Show solved / available counts for All, Easy, Medium, and Hard, matching the supplied references. Main count remains emphasized. Use amber for the main arc and Medium, teal for Easy, and red for Hard. Obtain available problem counts from LeetCode's allQuestionsCount in the same live GraphQL request. If counts are absent, show an unavailable denominator rather than inventing one. Clamp arc progress safely, including empty counts. Verify live denominators, zero counts, missing catalog, tests, and build.
+
+Updated reference: use a 270-degree open ring with counts and labels centered inside. Overall ring has separate Easy/Medium/Hard tracks. Show live attempted-but-unsolved count beneath the main label, calculated from totalSubmissionNum All count minus accepted All count. Preserve four columns.

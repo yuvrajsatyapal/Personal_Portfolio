@@ -1,0 +1,123 @@
+.footer {
+  background: transparent;
+  padding: 32px 18px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+  font-family: Figtree, sans-serif;
+  box-sizing: border-box;
+}
+.footer-content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 25px;
+  text-align: center;
+}
+.footer-quote {
+  font-size: 1rem;
+  color: #b3b3b3;
+  font-style: italic;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.footer-made {
+  font-size: 0.9rem;
+  color: #fff;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #666;
+}
+.footer-copyright {
+  font-family:
+    JetBrains Mono,
+    JetBrains Mono Fallback,
+    sans-serif;
+}
+.footer-visitors {
+  font-family:
+    JetBrains Mono,
+    JetBrains Mono Fallback,
+    sans-serif;
+  color: #888;
+}
+@media (max-width: 700px) {
+  .footer {
+    width: 100%;
+    padding: 24px 25px;
+  }
+  .footer-content {
+    padding: 0;
+    text-align: center;
+    width: 100%;
+  }
+  .footer-quote {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+  .footer-made {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 400px) {
+  .footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .footer-quote {
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+  }
+  .footer-made {
+    font-size: 0.75rem;
+    margin-bottom: 10px;
+  }
+  .footer-bottom {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 360px) {
+  .footer {
+    padding: 18px 20px;
+  }
+  .footer-quote {
+    font-size: 0.75rem;
+    margin-bottom: 14px;
+  }
+  .footer-made {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+  .footer-bottom {
+    font-size: 0.65rem;
+  }
+}
+@media (max-width: 354px) {
+  .footer {
+    padding: 16px 20px;
+  }
+  .footer-quote {
+    font-size: 0.7rem;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .footer-made {
+    font-size: 0.65rem;
+    margin-bottom: 6px;
+  }
+  .footer-bottom {
+    font-size: 0.6rem;
+    gap: 6px;
+  }
+}

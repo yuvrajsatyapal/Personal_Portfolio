@@ -1,0 +1,88 @@
+.card-title {
+  position: relative;
+  display: inline-block;
+  background: #18181b;
+  color: #d4d4d4;
+  padding: 4px 12px;
+  border-radius: 2px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 24px -8px #0006;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  box-sizing: border-box;
+}
+:root {
+  --corner-color: oklch(71.547% 0.00008 271.152);
+  --corner-border-width: 2px;
+}
+.corner.top.left {
+  top: 0;
+  left: 0;
+  border-top: var(--corner-border-width) solid var(--corner-color);
+  border-left: var(--corner-border-width) solid var(--corner-color);
+  border-radius: 2px 0 0;
+}
+.corner.top.right {
+  top: 0;
+  right: 0;
+  border-top: var(--corner-border-width) solid var(--corner-color);
+  border-right: var(--corner-border-width) solid var(--corner-color);
+  border-radius: 0 2px 0 0;
+}
+.corner.bottom.left {
+  bottom: 0;
+  left: 0;
+  border-bottom: var(--corner-border-width) solid var(--corner-color);
+  border-left: var(--corner-border-width) solid var(--corner-color);
+  border-radius: 0 0 0 2px;
+}
+.corner.bottom.right {
+  bottom: 0;
+  right: 0;
+  border-bottom: var(--corner-border-width) solid var(--corner-color);
+  border-right: var(--corner-border-width) solid var(--corner-color);
+  border-radius: 0 0 2px;
+}
+@media (max-width: 700px) {
+  .card-title {
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    margin-bottom: 12px;
+    margin-top: 24px;
+  }
+  .corner {
+    width: 6px;
+    height: 6px;
+  }
+}
+@media (max-width: 360px) {
+  .card-title {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  .corner {
+    width: 5px;
+    height: 5px;
+  }
+}
+@media (max-width: 354px) {
+  .card-title {
+    font-size: 0.75rem;
+    padding: 1px 5px;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+  .corner {
+    width: 4px;
+    height: 4px;
+  }
+}
