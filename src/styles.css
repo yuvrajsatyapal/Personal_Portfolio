@@ -110,8 +110,31 @@ p {
   color: #111;
   font-size: 25px;
 }
+.discord-join-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  background: #ffa116;
+  color: #211700;
+}
+.discord-join-btn:hover,
+.discord-invite:hover .discord-join-btn {
+  background: #ffb43b;
+}
+.discord-join-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
 .twitter-card-left {
-  font-size: 22px;
+  font-size: 26px;
+}
+.twitter-card-left > svg,
+.leetcode-logo > svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
 }
 .contact-separator {
   color: #777;
@@ -136,6 +159,16 @@ p {
   font-weight: 700;
   background: #eee;
   color: #111;
+}
+.company-logo {
+  padding: 0;
+  overflow: hidden;
+}
+.company-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .exp-header-right {
   margin-left: auto;
@@ -866,3 +899,47 @@ select option {
   .ring-stats { gap: 6px; }
   .stat-fraction { gap: 1px; }
 }
+
+.contact-tooltip-wrap { position: relative; display: inline-flex; }
+.hero-section .about-me .contact-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: max-content;
+  max-width: min(260px, calc(100vw - 40px));
+  padding: 9px 12px;
+  border: 1px solid #373b3e;
+  border-radius: 7px;
+  background: #191c1f;
+  box-shadow: 0 5px 18px #0006;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: auto;
+  transform: translate(-50%, 4px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+}
+.hero-section .about-me .contact-tooltip strong { color: #f4f4f5; font-size: 12px; font-weight: 600; }
+.hero-section .about-me .contact-tooltip > span { color: #a0a6ac; font-size: 11px; line-height: 16px; overflow-wrap: anywhere; }
+.contact-tooltip::after {
+  content: ""; position: absolute; top: 100%; left: 50%; width: 7px; height: 7px;
+  background: #191c1f; border-right: 1px solid #373b3e; border-bottom: 1px solid #373b3e;
+  transform: translate(-50%, -3px) rotate(45deg);
+}
+.hero-section .about-me .contact-tooltip-wrap:hover > .contact-tooltip,
+.hero-section .about-me .contact-tooltip-wrap:focus-within > .contact-tooltip {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+}
+.hero-section .about-me .contact-tooltip-first > .contact-tooltip { left: 0; transform: translate(0, 4px); }
+.hero-section .about-me .contact-tooltip-first:hover > .contact-tooltip,
+.hero-section .about-me .contact-tooltip-first:focus-within > .contact-tooltip { transform: translate(0, 0); }
+.contact-tooltip-first > .contact-tooltip::after { left: 17px; }
+.contact-tooltip-wrap::before { content: ""; position: absolute; bottom: 100%; left: 0; width: 100%; height: 10px; }
+.hero-section .about-me .tooltips-dismissed .contact-tooltip-wrap > .contact-tooltip { opacity: 0; visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { .hero-section .about-me .contact-tooltip { transition: none; } }

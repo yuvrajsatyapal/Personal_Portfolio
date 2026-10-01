@@ -7,17 +7,20 @@ export function External({
   children,
   className,
   title,
+  describedBy,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
   title?: string;
+  describedBy?: string;
 }) {
   return (
     <a
       href={href}
       className={className}
       title={title}
+      aria-describedby={describedBy}
       target={href.startsWith("mailto:") ? undefined : "_blank"}
       rel="noopener noreferrer"
     >
@@ -102,13 +105,10 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <p className="footer-quote">“{profile.quote}”</p>
-        <p className="footer-made">
-          Designed & Made with <span aria-label="love">❤️</span>
-        </p>
         <div className="footer-bottom">
-          <span className="footer-copyright">
-            {new Date().getFullYear()}. All rights reserved
-          </span>
+          <p className="footer-copyright">
+            © {new Date().getFullYear()} Yuvraj Satyapal.
+          </p>
           <span className="footer-visitors">
             <Clock />
           </span>

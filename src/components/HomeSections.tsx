@@ -12,6 +12,7 @@ import {
 import { Clock, External, Title } from "./Shared";
 import Icon from "./Icon";
 export function Hero() {
+  const [tooltipsDismissed, setTooltipsDismissed] = useState(false);
   return (
     <section className="hero-section">
       <div className="hero-section-banner-outer">
@@ -34,7 +35,9 @@ export function Hero() {
                   </span>
                 </h1>
               </div>
-              <p className="hero-section-profile-username">@{profile.handle}</p>
+              <p className="hero-section-profile-username">
+                <External href={profile.handleUrl}>@{profile.handle}</External>
+              </p>
               <p className="hero-section-profile-status-row">
                 <Link to="/projects">{profile.status}</Link>
                 <span className="tiny-status-dot" />
@@ -77,7 +80,7 @@ export function Hero() {
         <div className="community-links">
           <External href={socials[0].url!} className="twitter-card">
             <span className="twitter-card-left">
-              <Icon name="linkedin" />
+              <Icon name="linkedin" colored />
             </span>
             <span className="twitter-card-middle">
               <span className="twitter-name">{profile.name}</span>
@@ -96,37 +99,52 @@ export function Hero() {
                 {achievements.leetcodeUsername}
               </span>
             </span>
-            <span className="discord-join-btn">Profile ↗</span>
+            <span className="discord-join-btn">
+              Profile
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17 17 7M7 7h10v10" />
+              </svg>
+            </span>
           </External>
         </div>
-        <div className="contact-me">
+        <div
+          className={"contact-me" + (tooltipsDismissed ? " tooltips-dismissed" : "")}
+          onKeyDown={event => { if (event.key === "Escape") setTooltipsDismissed(true); }}
+          onFocusCapture={() => setTooltipsDismissed(false)}
+          onMouseEnter={() => setTooltipsDismissed(false)}
+          onMouseLeave={() => setTooltipsDismissed(false)}
+        >
           {profile.email ? (
-            <External className="contact-btn" href={"mailto:" + profile.email}>
-              <Icon name="email" />
-              Email Me
-            </External>
+            <span className="contact-tooltip-wrap contact-tooltip-first">
+              <External className="contact-btn" href={"mailto:" + profile.email} describedBy="contact-tooltip-email">
+                <Icon name="email" colored />
+                <span className="sr-only">Email</span>
+              </External>
+              <span className="contact-tooltip" role="tooltip" id="contact-tooltip-email">
+                <strong>Gmail</strong><span>{profile.email}</span>
+              </span>
+            </span>
           ) : (
             <button
               disabled
               className="contact-btn"
               title="Public email will be added"
             >
-              <Icon name="email" />
-              Email Me
+              <Icon name="email" colored />
+              <span className="sr-only">Email</span>
             </button>
           )}
-          <span className="contact-separator">|</span>
           {socials.map((s) =>
             s.url ? (
-              <External
-                key={s.name}
-                className="contact-btn"
-                href={s.url}
-                title={s.name}
-              >
-                <Icon name={s.icon} />
-                <span className="sr-only">{s.name}</span>
-              </External>
+              <span className="contact-tooltip-wrap" key={s.name}>
+                <External className="contact-btn" href={s.url} describedBy={`contact-tooltip-${s.icon}`}>
+                  <Icon name={s.icon} colored />
+                  <span className="sr-only">{s.name}</span>
+                </External>
+                <span className="contact-tooltip" role="tooltip" id={`contact-tooltip-${s.icon}`}>
+                  <strong>{s.name}</strong><span>@{s.handle}</span>
+                </span>
+              </span>
             ) : (
               <button
                 key={s.name}
@@ -135,14 +153,19 @@ export function Hero() {
                 title={s.name + " link will be added"}
                 aria-label={s.name + " link coming soon"}
               >
-                <Icon name={s.icon} />
+                <Icon name={s.icon} colored />
               </button>
             ),
           )}
-          <Link className="contact-btn" to="/resume" title="Resume">
-            <Icon name="resume" />
-            <span className="sr-only">Resume</span>
-          </Link>
+          <span className="contact-tooltip-wrap">
+            <Link className="contact-btn" to="/resume" aria-describedby="contact-tooltip-resume">
+              <Icon name="resume" colored />
+              <span className="sr-only">Resume</span>
+            </Link>
+            <span className="contact-tooltip" role="tooltip" id="contact-tooltip-resume">
+              <strong>Resume</strong><span>{profile.name}</span>
+            </span>
+          </span>
         </div>
       </div>
     </section>
@@ -151,7 +174,7 @@ export function Hero() {
 export function Skills() {
   return (
     <section className="skill-section">
-      <Title>My Skills</Title>
+      <Title>Tech Stack</Title>
       {[skills, tools].map((row, i) => (
         <div
           className="marquee-container"
@@ -186,7 +209,7 @@ export function Experience() {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
   return (
     <section className="experience-section">
-      <Title>Work Experience</Title>
+      <Title>Experience</Title>
       <div className="exp-timeline-container">
         <div className="exp-timeline-line" />
         {experience.map((e, i) => (
@@ -195,7 +218,13 @@ export function Experience() {
             <div className="exp-card">
               <div className="exp-header">
                 <div className="exp-header-left">
-                  <div className="exp-logo initials-logo">{e.initials}</div>
+                  {e.logo ? (
+                    <div className="exp-logo company-logo">
+                      <img src={e.logo} alt={`${e.company} logo`} />
+                    </div>
+                  ) : (
+                    <div className="exp-logo initials-logo">{e.initials}</div>
+                  )}
                   <div className="exp-company-info">
                     <div className="exp-company-row">
                       <h3 className="exp-company-name">{e.company}</h3>

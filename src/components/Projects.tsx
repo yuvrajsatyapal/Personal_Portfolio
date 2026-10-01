@@ -86,7 +86,7 @@ export function ProjectCard({ project: p }: { project: Project }) {
 export default function Projects({ all = false }: { all?: boolean }) {
   return (
     <section className="project-section">
-      <Title>My Projects</Title>
+      <Title>Projects</Title>
       {projects.map((p) => (
         <ProjectCard key={p.id} project={p} />
       ))}

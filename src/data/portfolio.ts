@@ -20,7 +20,8 @@ export const profile = {
     "Currently expanding into **AI / GenAI engineering**, and turning ideas into useful products.",
   ],
   status: "Building FlowBoard",
-  handle: "yuvrajsatyapal",
+  handle: "uviii_03",
+  handleUrl: "https://x.com/uviii_03",
   photo: "/images/yuvraj-profile.png" as string | null,
   email: "yuvrajsatyapal21@gmail.com" as string | null,
   resume: null as string | null,
@@ -30,16 +31,19 @@ export const profile = {
 export const socials = [
   {
     name: "LinkedIn",
+    handle: "yuvraj-satyapal",
     url: "https://www.linkedin.com/in/yuvraj-satyapal",
     icon: "linkedin",
   },
   {
     name: "GitHub",
+    handle: "yuvrajsatyapal",
     url: "https://github.com/yuvrajsatyapal" as string | null,
     icon: "github",
   },
   {
     name: "LeetCode",
+    handle: "yuvraj_satyapal",
     url: "https://leetcode.com/u/yuvraj_satyapal/",
     icon: "leetcode",
   },
@@ -53,6 +57,7 @@ export const education = {
 export const experience = [
   {
     company: "Arabazaar",
+    logo: "/images/arabazaar-logo.png" as string | null,
     location: "Remote",
     role: "Full Stack Developer Intern",
     dates: "Mar 2026 – Aug 2026",
