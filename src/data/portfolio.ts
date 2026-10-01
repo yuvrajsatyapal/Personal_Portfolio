@@ -212,11 +212,11 @@ export const support = {
   wallets: {} as Record<string, string>,
 };
 export const site = {
+  clickFeedback: { sound: "/audio/click.mp3", volume: 0.3, sparkCount: 12, duration: 500 },
   repoUrl: null as string | null,
   analyticsEndpoint: null as string | null,
   leetcodeEndpoint: "/api/leetcode",
   githubEndpoint: "/api/github",
-  blogs: [] as { slug: string; title: string; date: string; body: string[] }[],
 };
 export const uses = [
   {

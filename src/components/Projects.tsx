@@ -100,7 +100,7 @@ export default function Projects({ all = false }: { all?: boolean }) {
       {!all && (
         <div className="view-all-projects right-side">
           <Link className="view-all-btn" to="/projects">
-            More Projects
+            View All Projects
             <Icon name="right" />
           </Link>
         </div>

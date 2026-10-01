@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   profile,
   education,
@@ -219,54 +219,6 @@ export function Analytics() {
         </button>
       </div>
     </div>
-  );
-}
-export function Blogs() {
-  return (
-    <div className="standard-container secondary-page">
-      <Title>/blogs</Title>
-      <p className="resume-description">
-        Notes on building, learning and engineering.
-      </p>
-      {site.blogs.length ? (
-        site.blogs.map((b) => (
-          <Link className="blog-list-card" key={b.slug} to={"/blogs/" + b.slug}>
-            <h3>{b.title}</h3>
-            <span>
-              {b.date}
-              <Icon name="right" />
-            </span>
-          </Link>
-        ))
-      ) : (
-        <div className="empty-page">
-          <Icon name="code" />
-          <h3>Writing, coming soon.</h3>
-          <p>
-            I'll share notes from projects and things I learn along the way.
-          </p>
-        </div>
-      )}
-      <PageLinks next={{ to: "/projects", label: "View Projects" }} />
-    </div>
-  );
-}
-export function BlogPost() {
-  const { slug } = useParams();
-  const post = site.blogs.find((b) => b.slug === slug);
-  if (!post) return <NotFound />;
-  return (
-    <article className="standard-container secondary-page article">
-      <Title>{post.title}</Title>
-      <p>{post.date}</p>
-      {post.body.map((p, i) => (
-        <p key={i}>{p}</p>
-      ))}
-      <Link className="view-all-btn" to="/blogs">
-        <Icon name="left" />
-        All posts
-      </Link>
-    </article>
   );
 }
 export function NotFound() {

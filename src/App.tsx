@@ -4,7 +4,6 @@ import {
   Footer,
   Contact,
   ScrollReset,
-  PageLinks,
 } from "./components/Shared";
 import {
   Hero,
@@ -13,13 +12,12 @@ import {
   Education,
 } from "./components/HomeSections";
 import Projects from "./components/Projects";
+import ClickFeedback from "./components/ClickFeedback";
 import Activity from "./components/Activity";
 import Support from "./pages/Support";
 import {
   Resume,
   Analytics,
-  Blogs,
-  BlogPost,
   NotFound,
 } from "./pages/Secondary";
 export default function App() {
@@ -28,6 +26,7 @@ export default function App() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <ClickFeedback />
       <Navbar />
       <ScrollReset />
       <main id="main">
@@ -67,17 +66,12 @@ export default function App() {
             element={
               <div className="projects-page secondary-page">
                 <Projects all />
-                <div className="standard-container">
-                  <PageLinks next={{ to: "/blogs", label: "View Blogs" }} />
-                </div>
               </div>
             }
           />
           <Route path="/resume" element={<Resume />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

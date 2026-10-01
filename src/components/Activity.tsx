@@ -71,7 +71,7 @@ export default function Activity({
   }, [endpoint, github, retry]);
   return (
     <section className="standard-container activity-section">
-      <Title>{label} Activity</Title>
+      <Title>{github ? "GitHub Contributions" : "LeetCode Activity"}</Title>
       <div className="activity-card">
         <div className="activity-header">
           <span>
