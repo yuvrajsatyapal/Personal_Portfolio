@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+import { transitionTheme } from "../lib/theme-transition";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FiSearch, FiSun, FiMoon, FiArrowUpRight, FiX } from "react-icons/fi";
+import { FiSearch, FiArrowUpRight, FiX } from "react-icons/fi";
 import { projects } from "../data/portfolio";
 import "../header.css";
 
@@ -70,6 +72,14 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(() => window.scrollY > 50);
   const [light, setLight] = useState(() => document.documentElement.dataset.theme === "light");
+  const toggleSound = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    const sound = new Audio("/audio/theme-toggle.mp3");
+    sound.volume = .3;
+    sound.preload = "auto";
+    toggleSound.current = sound;
+    return () => { sound.pause(); toggleSound.current = null; };
+  }, []);
   const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -98,7 +108,23 @@ export default function Header() {
           <div className="header-actions">
             <button className="header-search" aria-label="Search portfolio" aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K" onClick={() => { setSearchOpen(true); }}><FiSearch aria-hidden="true" /><span className="header-shortcut" aria-hidden="true"><kbd>{isMac ? "⌘" : "Ctrl"}</kbd><kbd>K</kbd></span></button>
             <span className="header-divider" aria-hidden="true" />
-            <button className="header-theme" aria-label={`Switch to ${light ? "dark" : "light"} theme`} onClick={() => { const next = !light; setLight(next); document.documentElement.dataset.theme = next ? "light" : "dark"; }}>{light ? <FiMoon aria-hidden="true" /> : <FiSun aria-hidden="true" />}</button>
+            <button className="header-theme" data-click-feedback="off" title="Toggle theme" aria-label={`Switch to ${light ? "dark" : "light"} theme`} onClick={() => {
+              try {
+                if (toggleSound.current) {
+                  toggleSound.current.currentTime = 0;
+                  void toggleSound.current.play()?.catch(() => {});
+                }
+              } catch { /* Audio availability must not interrupt theme switching. */ }
+              void transitionTheme(() => {
+                const next = !light;
+                flushSync(() => { setLight(next); document.documentElement.dataset.theme = next ? "light" : "dark"; });
+              });
+            }}>
+              {/* Dark Side icon adapted from chanhdai.com (MIT); see the audio license notice. */}
+              <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+                <path className={"theme-dark-side" + (light ? "" : " is-dark")} d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z" />
+              </svg>
+            </button>
           </div>
         </div>
       </nav>

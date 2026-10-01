@@ -7,10 +7,23 @@ function setup(reduced=false){
  const audio={play,pause,volume:0,currentTime:0,preload:''};
  vi.stubGlobal('Audio',vi.fn(function(){return audio;}));
  vi.stubGlobal('matchMedia',vi.fn(()=>({matches:reduced})));
- render(<><ClickFeedback/><button>Action</button></>);
+ render(<><ClickFeedback/><button>Action</button><button data-click-feedback="off">Theme<svg data-testid="theme-icon"><path /></svg></button></>);
  return audio;
 }
 describe('reference click feedback',()=>{
+ it('stops pointer sound and clears sparks for excluded controls including SVG children',()=>{
+  const audio=setup();
+  fireEvent.click(screen.getByText('Action'));
+  expect(audio.play).toHaveBeenCalledOnce();
+  fireEvent.click(screen.getByTestId('theme-icon'));
+  expect(audio.play).toHaveBeenCalledOnce();
+  expect(audio.pause).toHaveBeenCalledOnce();
+  expect(document.querySelector('.click-spark-burst')).toBeNull();
+  fireEvent.click(screen.getByText('Theme'),{detail:0});
+  expect(audio.play).toHaveBeenCalledOnce();
+  fireEvent.click(screen.getByText('Action'));
+  expect(audio.play).toHaveBeenCalledTimes(2);
+ });
  it('plays quiet audio and removes its spark burst after half a second',()=>{
   vi.useFakeTimers();const audio=setup();
   fireEvent.click(screen.getByText('Action'),{clientX:120,clientY:80,detail:1});

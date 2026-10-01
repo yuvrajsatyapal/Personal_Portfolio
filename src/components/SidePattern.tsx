@@ -61,9 +61,9 @@ function BranchGutter({ side }: { side: "left" | "right" }) {
       let index = 0;
       let previous = 0;
       const paint = (time: number) => {
-        if (time - previous >= 25 || reduced) {
+        if (time - previous >= 40 || reduced) {
           previous = time;
-          const end = reduced ? segments.length : Math.min(index + 45, segments.length);
+          const end = reduced ? segments.length : Math.min(index + 20, segments.length);
           context.beginPath();
           for (; index < end; index++) {
             const [x, y, ex, ey] = segments[index];
@@ -77,9 +77,18 @@ function BranchGutter({ side }: { side: "left" | "right" }) {
       frame = requestAnimationFrame(paint);
     };
     const resize = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(draw, 150); };
+    let theme = document.documentElement.dataset.theme;
+    const themeObserver = new MutationObserver(() => {
+      const next = document.documentElement.dataset.theme;
+      if (next === theme) return;
+      theme = next;
+      clearTimeout(resizeTimer);
+      draw();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     draw();
     window.addEventListener("resize", resize);
-    return () => { cancelAnimationFrame(frame); clearTimeout(resizeTimer); window.removeEventListener("resize", resize); };
+    return () => { themeObserver.disconnect(); cancelAnimationFrame(frame); clearTimeout(resizeTimer); window.removeEventListener("resize", resize); };
   }, [side]);
   return <canvas ref={ref} className={`side-pattern-gutter side-pattern-${side}`} />;
 }

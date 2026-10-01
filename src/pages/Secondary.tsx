@@ -88,7 +88,7 @@ interface AnalyticsData {
   visitors: number;
   series: { label: string; pageviews: number; visitors: number }[];
 }
-export function Analytics() {
+export function Analytics({ embedded = false }: { embedded?: boolean }) {
   const [period, setPeriod] = useState("7d");
   const [refresh, setRefresh] = useState(0);
   const [data, setData] = useState<AnalyticsData | null>(null);
@@ -123,11 +123,11 @@ export function Analytics() {
     return () => controller.abort();
   }, [period, refresh]);
   return (
-    <div className="standard-container secondary-page">
+    <section
+      id="analytics"
+      className={`standard-container${embedded ? "" : " secondary-page"}`}
+    >
       <Title>Analytics</Title>
-      <p className="resume-description">
-        A transparent look at this portfolio's traffic.
-      </p>
       <div className="analytics-controls">
         <span>
           <Icon name="chart" />
@@ -204,6 +204,7 @@ export function Analytics() {
           </div>
         )}
       </div>
+      {!embedded && (
       <div className="page-links">
         <Link className="view-all-btn" to="/">
           <Icon name="left" />
@@ -218,7 +219,8 @@ export function Analytics() {
           Refresh
         </button>
       </div>
-    </div>
+      )}
+    </section>
   );
 }
 export function NotFound() {

@@ -46,6 +46,7 @@ export default function App() {
                 <Projects />
                 <Activity platform="github" />
                 <Activity />
+                <Analytics embedded />
                 <Contact />
               </div>
             }
@@ -61,6 +62,7 @@ export default function App() {
                 <Projects />
                 <Activity platform="github" />
                 <Activity />
+                <Analytics embedded />
                 <Contact />
               </div>
             }

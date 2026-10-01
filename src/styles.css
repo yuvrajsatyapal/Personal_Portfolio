@@ -110,17 +110,21 @@ p {
   color: #111;
   font-size: 25px;
 }
+:root[data-theme="light"] .leetcode-logo { background: #000; }
 .discord-join-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   white-space: nowrap;
-  background: #ffa116;
-  color: #211700;
+  background: #1a1b1c;
+  color: #fff;
+  border: 1.5px dashed #444;
+  border-radius: 0;
 }
 .discord-join-btn:hover,
 .discord-invite:hover .discord-join-btn {
-  background: #ffb43b;
+  background: #1a1b1c;
+  border-color: #888;
 }
 .discord-join-btn svg {
   width: 14px;
@@ -152,6 +156,13 @@ p {
 .primary-skill {
   font-weight: 600;
 }
+:root[data-theme="light"] .skill-icon:is([data-icon="nextjs"], [data-icon="socketio"], [data-icon="express"], [data-icon="github"]) svg { color: #17191a; }
+:root[data-theme="light"] .skill-icon svg { filter: saturate(1.35); }
+:root[data-theme="light"] .skill-icon:is([data-icon="prisma"], [data-icon="database"]) svg { color: #0089b8; }
+:root[data-theme="light"] .skill-icon[data-icon="react"] svg { color: #00a8de; }
+:root[data-theme="light"] .skill-icon[data-icon="javascript"] svg { color: #f2c900; }
+:root[data-theme="light"] .skill-icon[data-icon="tailwind"] svg { color: #00a9dc; }
+:root[data-theme="light"] .skill-icon[data-icon="nodejs"] svg { color: #279d43; }
 .marquee-container:focus-within .marquee {
   animation-play-state: paused;
 }
@@ -180,6 +191,9 @@ p {
   border: 1.5px dashed var(--border);
   margin: 12px 0 16px;
 }
+.education-card:hover { border-color: #888; }
+.exp-status-badge { color: #fff; }
+:root[data-theme="light"] .exp-status-badge { box-shadow: inset 0 0 0 1px #fff; }
 .education-icon {
   font-size: 22px;
   color: #bbb;
@@ -255,6 +269,11 @@ p {
   border: 1.5px dashed var(--border);
   padding: 18px;
   margin: 12px 0 16px;
+  transition: border-color 0.3s ease;
+}
+.activity-card:hover,
+:root[data-theme="light"] .activity-card:hover {
+  border-color: #888;
 }
 .activity-header {
   display: flex;
@@ -443,6 +462,12 @@ p {
   border: 1.5px dashed var(--border);
   padding: 20px;
   min-height: 260px;
+}
+:is(.analytics-controls, .analytics-metrics > div, .analytics-chart) {
+  transition: border-color 0.3s ease;
+}
+:is(.analytics-controls, .analytics-metrics > div, .analytics-chart):hover {
+  border-color: #888;
 }
 .analytics-empty {
   min-height: 220px;
@@ -848,6 +873,15 @@ select option {
   --cell: 12px;
   border-radius: 2px;
 }
+:root[data-theme="light"] .contribution-level-0 { background: #dce2e5; }
+:root[data-theme="light"] .contribution-level-1 { background: #c6e9c9; color: #193b22; }
+:root[data-theme="light"] .contribution-level-2 { background: #86cf90; color: #12381c; }
+:root[data-theme="light"] .contribution-level-3 { background: #2f8540; color: #fff; }
+:root[data-theme="light"] .contribution-level-4 { background: #17652d; color: #fff; }
+:root[data-theme="light"] .contribution-day:hover { outline-color: #17652d; }
+:root[data-theme="light"] :is(.contribution-months, .contribution-caption) { color: #596269; }
+:root[data-theme="light"] .activity-header a { color: #4c565c; }
+:root[data-theme="light"] .activity-header a:hover { color: #17191a; }
 .activity-header span > svg {
   color: inherit;
 }
@@ -895,6 +929,16 @@ select option {
 .stat-attempting { position: absolute; bottom: 7%; left: 0; width: 100%; font-size: clamp(8px, 9cqw, 12px); color: #a3a3a3; white-space: nowrap; }
 .activity-highlights { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px 22px; margin-top: 0; color: #999; font-size: 12px; }
 .activity-highlights strong { color: #eee; font-weight: 600; }
+:root[data-theme="light"] .activity-stats { color: #17191a; }
+:root[data-theme="light"] :is(.stat-fraction > span, .ring-stats .difficulty-total small, .stat-attempting, .activity-highlights) { color: #596269; }
+:root[data-theme="light"] .activity-highlights strong { color: #17191a; }
+:root[data-theme="light"] .difficulty-easy { --difficulty-color: #12b9b2; --difficulty-label: #087f7b; }
+:root[data-theme="light"] .difficulty-medium { --difficulty-color: #ffb400; --difficulty-label: #956000; }
+:root[data-theme="light"] .difficulty-hard { --difficulty-color: #ff354b; --difficulty-label: #d62336; }
+:root[data-theme="light"] .ring-stats .activity-stat small { color: var(--difficulty-label, #303538); font-weight: 500; }
+:root[data-theme="light"] .stat-arc-track { opacity: .3; }
+:root[data-theme="light"] .solved-check { color: #168332; }
+:root[data-theme="light"] .education-icon { color: #303538; }
 @media (max-width: 480px) {
   .ring-stats { gap: 6px; }
   .stat-fraction { gap: 1px; }
@@ -1070,6 +1114,7 @@ select option {
 .click-feedback { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
 .click-spark-burst { position: absolute; width: 80px; height: 80px; transform: translate(-50%, -50%); overflow: visible; }
 .click-spark-ray { stroke: #fff; stroke-width: 2; transform-origin: 0 0; animation: click-spark .5s ease-out forwards; }
+:root[data-theme="light"] .click-spark-ray { stroke: #303538; }
 @keyframes click-spark {
   from { transform: translateX(0) scaleX(1); }
   to { transform: translateX(24px) scaleX(0); }

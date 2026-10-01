@@ -30,9 +30,6 @@ export function Hero() {
               <div className="hero-section-profile-name-row">
                 <h1 className="hero-section-profile-name">
                   {profile.name}
-                  <span className="heart" title="Thanks for stopping by">
-                    <Icon name="heart" />
-                  </span>
                 </h1>
               </div>
               <p className="hero-section-profile-username">
@@ -192,7 +189,7 @@ export function Skills() {
                   className={"skill-pill" + (s.primary ? " primary-skill" : "")}
                   aria-hidden={copy > 0 ? "true" : undefined}
                 >
-                  <span className="skill-icon" style={{ color: s.color }}>
+                  <span className="skill-icon" data-icon={s.icon} style={{ color: s.color }}>
                     <Icon name={s.icon} />
                   </span>
                   <span className="skill-name">{s.name}</span>

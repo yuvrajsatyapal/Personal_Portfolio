@@ -10,6 +10,15 @@ const open = (path = "/") =>
     </MemoryRouter>,
   );
 describe("portfolio flows", () => {
+  it.each(["/", "/home"])("shows Analytics below LeetCode on %s", (path) => {
+    open(path);
+    const leetcode = screen.getByRole("heading", { name: "LeetCode Activity" });
+    const analytics = screen.getByRole("heading", { name: "Analytics" });
+    expect(leetcode.compareDocumentPosition(analytics) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Analytics period" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Refresh analytics" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Back to Home/ })).not.toBeInTheDocument();
+  });
   it("navigates to the complete project collection", async () => {
     open();
     await userEvent.click(

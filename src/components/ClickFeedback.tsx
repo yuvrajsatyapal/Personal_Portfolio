@@ -12,6 +12,14 @@ export default function ClickFeedback() {
     const timers = new Set<ReturnType<typeof setTimeout>>();
     let nextId = 0;
     const click = (event: MouseEvent) => {
+      if (event.target instanceof Element && event.target.closest('[data-click-feedback="off"]')) {
+        audio.pause();
+        audio.currentTime = 0;
+        timers.forEach(clearTimeout);
+        timers.clear();
+        setBursts([]);
+        return;
+      }
       if (event.target instanceof Element && event.target.closest("[disabled], [aria-disabled='true']")) return;
       try {
         audio.currentTime = 0;
