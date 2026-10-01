@@ -7,6 +7,7 @@ export interface Project {
   github: string | null;
   live: string | null;
   image: string;
+  imageKind?: "screenshot" | "concept";
   featured?: boolean;
 }
 export const profile = {
@@ -76,7 +77,8 @@ export const projects: Project[] = [
     id: "flowboard",
     name: "FlowBoard",
     featured: true,
-    image: "/images/flowboard.svg",
+    image: "/images/flowboard-screenshot.png",
+    imageKind: "screenshot",
     description:
       "A real-time Kanban platform for workspaces, boards and cards. Built for collaborative teams, with live presence and instant updates.",
     tech: [
@@ -100,13 +102,14 @@ export const projects: Project[] = [
       "PostgreSQL full-text search; validated Cloudinary image pipeline",
       "Analytics and Excel export; designed for 100+ concurrent users",
     ],
-    github: null,
-    live: null,
+    github: "https://github.com/yuvrajsatyapal/FlowBoard",
+    live: "https://flow-board-web-mu.vercel.app/",
   },
   {
     id: "trimly",
     name: "Trimly",
-    image: "/images/trimly.svg",
+    image: "/images/trimly-screenshot.png",
+    imageKind: "screenshot",
     description:
       "A full-stack URL shortener with custom aliases, editable links, downloadable QR codes and a link-management dashboard.",
     tech: [
@@ -125,13 +128,14 @@ export const projects: Project[] = [
       "Redis caching and sliding-window rate limiting",
       "Redirect latency under 80ms; deployed on Vercel",
     ],
-    github: null,
-    live: null,
+    github: "https://github.com/yuvrajsatyapal/Trimly",
+    live: "https://trimly-five-azure.vercel.app/",
   },
   {
     id: "avochat",
     name: "AvoChat",
-    image: "/images/avochat.svg",
+    image: "/images/avochat-screenshot.png",
+    imageKind: "screenshot",
     description:
       "Real-time messaging with authentication, persistent conversations, image sharing and online presence.",
     tech: [
@@ -148,32 +152,10 @@ export const projects: Project[] = [
       "JWT authentication, MongoDB persistence and image uploads",
       "Responsive chat interface supporting 20+ concurrent users",
     ],
-    github: null,
-    live: null,
+    github: "https://github.com/yuvrajsatyapal/AvoChat",
+    live: "https://avo-chat.vercel.app/login",
   },
-  {
-    id: "insightspend",
-    name: "InsightSpend",
-    image: "/images/insightspend.svg",
-    description:
-      "Track income and expenses, understand spending with interactive dashboards, and export financial reports.",
-    tech: [
-      "React",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Chart.js",
-      "ExcelJS",
-      "Tailwind CSS",
-    ],
-    highlights: [
-      "JWT authentication and REST APIs",
-      "Manage 100+ transaction entries with Chart.js analytics",
-      "Excel exports reduced manual reporting time by 75%",
-    ],
-    github: null,
-    live: null,
-  },
+
 ];
 export const skills = [
   { name: "TypeScript", icon: "typescript", color: "#3178c6", primary: true },

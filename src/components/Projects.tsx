@@ -12,7 +12,12 @@ export function ProjectCard({ project: p }: { project: Project }) {
       <div className="banner">
         <img
           src={p.image}
-          alt={p.name + " — illustrative interface preview"}
+          alt={
+            p.name +
+            (p.imageKind === "screenshot"
+              ? " — website screenshot"
+              : " — illustrative interface preview")
+          }
           loading="lazy"
         />
         {p.featured && (
@@ -20,9 +25,11 @@ export function ProjectCard({ project: p }: { project: Project }) {
             <span className="stats-text">Featured project</span>
           </div>
         )}
-        <div className="sponsor-badge">
-          <span className="sponsor-text">Interface concept</span>
-        </div>
+        {p.imageKind !== "screenshot" && (
+          <div className="sponsor-badge">
+            <span className="sponsor-text">Interface concept</span>
+          </div>
+        )}
       </div>
       <div className="project-details">
         <div className="project-header-row">
@@ -57,7 +64,7 @@ export function ProjectCard({ project: p }: { project: Project }) {
           </div>
         </div>
         <p className="project-desc">{p.description}</p>
-        <span className="project-tech-label">Technologies Used:</span>
+        <span className="project-tech-label">Tech Stack:</span>
         <div className="project-tech">
           {p.tech.map((t) => (
             <span key={t}>{t}</span>

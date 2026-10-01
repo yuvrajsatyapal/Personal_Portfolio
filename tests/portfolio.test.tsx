@@ -17,7 +17,8 @@ describe("portfolio flows", () => {
         name: "Projects",
       }),
     );
-    expect(screen.getByText("InsightSpend")).toBeVisible();
+    expect(screen.getByText("AvoChat")).toBeVisible();
+    expect(screen.queryByText("InsightSpend")).not.toBeInTheDocument();
   });
   it("expands experience with keyboard-accessible controls", async () => {
     open();
