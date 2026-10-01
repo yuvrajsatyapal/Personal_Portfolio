@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route, useMatch } from "react-router-dom";
 import {
   Navbar,
   Footer,
@@ -22,6 +23,18 @@ import {
   Analytics,
   NotFound,
 } from "./pages/Secondary";
+
+function PersistentResume() {
+  const active = useMatch("/resume") !== null;
+  const [visited, setVisited] = useState(active);
+  useEffect(() => {
+    if (active) setVisited(true);
+  }, [active]);
+
+  // Retain the iframe's browsing context when other routes are displayed.
+  return <div hidden={!active}>{(active || visited) && <Resume />}</div>;
+}
+
 export default function App() {
   return (
     <>
@@ -75,11 +88,12 @@ export default function App() {
               </div>
             }
           />
-          <Route path="/resume" element={<Resume />} />
+          <Route path="/resume" element={null} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/support" element={<Support />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <PersistentResume />
       </main>
       <Footer />
     </>

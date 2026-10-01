@@ -242,9 +242,6 @@ p {
 .unavailable {
   opacity: 0.5;
 }
-.featured-project {
-  border-color: #666;
-}
 .featured-project .project-name {
   color: #fff;
 }

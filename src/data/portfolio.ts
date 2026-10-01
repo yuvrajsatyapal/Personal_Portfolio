@@ -7,6 +7,7 @@ export interface Project {
   github: string | null;
   live: string | null;
   image: string;
+  video?: string;
   imageKind?: "screenshot" | "concept";
   featured?: boolean;
 }
@@ -82,6 +83,7 @@ export const projects: Project[] = [
     name: "FlowBoard",
     featured: true,
     image: "/images/flowboard-screenshot.png",
+    video: "/videos/flowboard-preview.mp4",
     imageKind: "screenshot",
     description:
       "A real-time Kanban platform for workspaces, boards and cards. Built for collaborative teams, with live presence and instant updates.",

@@ -1,14 +1,62 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FiPause, FiPlay } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { projects, type Project } from "../data/portfolio";
 import { External, Title } from "./Shared";
 import Icon from "./Icon";
 export function ProjectCard({ project: p }: { project: Project }) {
   const [open, setOpen] = useState(false);
+  const video = useRef<HTMLVideoElement>(null);
+  const wantsPreview = useRef(false);
+  const [previewRequested, setPreviewRequested] = useState(false);
+  const [previewLoaded, setPreviewLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [previewFailed, setPreviewFailed] = useState(false);
+
+  function stopPreview() {
+    wantsPreview.current = false;
+    setPreviewRequested(false);
+    setPlaying(false);
+  }
+
+  function startPreview() {
+    if (!p.video || previewFailed) return;
+    wantsPreview.current = true;
+    setPreviewLoaded(true);
+    setPreviewRequested(true);
+  }
+
+  useEffect(() => {
+    const player = video.current;
+    if (!player) return;
+    let cancelled = false;
+    if (previewRequested) {
+      void player.play().then(() => {
+        if (!cancelled && wantsPreview.current) setPlaying(true);
+        else if (!wantsPreview.current) player.pause();
+      }).catch(() => {
+        if (!cancelled) {
+          setPreviewFailed(true);
+          stopPreview();
+        }
+      });
+    } else {
+      player.pause();
+      player.currentTime = 0;
+    }
+    return () => { cancelled = true; };
+  }, [previewRequested]);
+
   return (
     <article
       id={"project-" + p.id}
       className={"project-card" + (p.featured ? " featured-project" : "")}
+      onMouseEnter={event => {
+        if (event.target instanceof Element && event.target.closest(".project-preview-toggle")) return;
+        if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || window.matchMedia?.("(hover: none)").matches) return;
+        startPreview();
+      }}
+      onMouseLeave={stopPreview}
     >
       <div className="banner">
         <img
@@ -21,6 +69,26 @@ export function ProjectCard({ project: p }: { project: Project }) {
           }
           loading="lazy"
         />
+        {p.video && (
+          <video
+            ref={video}
+            className={"project-preview-video" + (playing ? " is-playing" : "")}
+            src={previewLoaded ? p.video : undefined}
+            poster={p.image}
+            muted loop playsInline preload="none" aria-hidden="true"
+            onError={() => { setPreviewFailed(true); stopPreview(); }}
+          />
+        )}
+        {p.video && !previewFailed && (
+          <button
+            className="project-preview-toggle"
+            aria-label={`${previewRequested ? "Pause" : "Play"} ${p.name} preview`}
+            aria-pressed={previewRequested}
+            onClick={() => { if (previewRequested) stopPreview(); else startPreview(); }}
+          >
+            {previewRequested ? <FiPause aria-hidden="true" /> : <FiPlay aria-hidden="true" />}
+          </button>
+        )}
         {p.featured && (
           <div className="stats-badge">
             <span className="stats-text">Featured project</span>
