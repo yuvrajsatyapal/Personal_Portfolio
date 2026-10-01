@@ -10,6 +10,8 @@ export interface Project {
   imageKind?: "screenshot" | "concept";
   featured?: boolean;
 }
+// Upload new versions to this same Drive file to update the resume without code changes.
+const resumeDriveFileId = "1r62uOgG4HibN1NIZ8D85VGCCoWA0LK2J";
 export const profile = {
   name: "Yuvraj Satyapal",
   role: "Full Stack Developer",
@@ -25,7 +27,9 @@ export const profile = {
   handleUrl: "https://x.com/uviii_03",
   photo: "/images/yuvraj-profile.png" as string | null,
   email: "yuvrajsatyapal21@gmail.com" as string | null,
-  resume: null as string | null,
+  resume: `https://drive.google.com/file/d/${resumeDriveFileId}/view` as string | null,
+  resumePreview: `https://drive.google.com/file/d/${resumeDriveFileId}/preview`,
+  resumeDownload: `https://drive.google.com/uc?export=download&id=${resumeDriveFileId}`,
   siteUrl: null as string | null,
   quote: "Build. Learn. Improve. Repeat.",
 };

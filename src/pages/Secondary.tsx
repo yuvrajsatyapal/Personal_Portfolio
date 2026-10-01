@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { HiDownload } from "react-icons/hi";
 import {
   profile,
   education,
@@ -13,18 +14,15 @@ export function Resume() {
   return (
     <div className="standard-container secondary-page">
       <Title>Resume</Title>
-      <p className="resume-description">
-        My resume — view it below or download a copy.
-      </p>
       <div className="resume-actions">
         {profile.resume ? (
-          <External className="resume-download-btn" href={profile.resume}>
-            <Icon name="resume" />
-            Download resume PDF
+          <External className="resume-download-btn" href={profile.resumeDownload}>
+            <HiDownload className="resume-download-icon" aria-hidden="true" />
+            Download
           </External>
         ) : (
           <button disabled className="resume-download-btn">
-            <Icon name="resume" />
+            <HiDownload className="resume-download-icon" aria-hidden="true" />
             Resume PDF coming soon
           </button>
         )}
@@ -35,7 +33,7 @@ export function Resume() {
             <iframe
               className="resume-iframe"
               title={profile.name + " resume"}
-              src={profile.resume}
+              src={profile.resumePreview}
             />
           </div>
           <div className="mobile-resume-link">

@@ -55,6 +55,7 @@
 }
 .resume-viewer {
   width: 100%;
+  padding: 12px 0;
   border: 1.5px dashed #444;
   border-radius: 2px;
   overflow: hidden;

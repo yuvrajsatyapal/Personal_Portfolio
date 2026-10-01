@@ -1120,3 +1120,44 @@ select option {
   to { transform: translateX(24px) scaleX(0); }
 }
 @media (prefers-reduced-motion: reduce) { .click-feedback { display: none; } }
+.profile-verified-badge {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.profile-name-text {
+  position: relative;
+  display: inline-block;
+}
+.profile-name-underline {
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 10px;
+  overflow: visible;
+  pointer-events: none;
+}
+.profile-name-underline path {
+  fill: none;
+  stroke: #8c8c8c;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+}
+.profile-name-text:hover .profile-name-underline path {
+  opacity: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 300ms ease-out;
+}
+.profile-name-text:hover .profile-name-underline path + path {
+  transition-delay: 300ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-name-text:hover .profile-name-underline path {
+    transition: none;
+  }
+}

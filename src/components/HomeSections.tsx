@@ -29,7 +29,17 @@ export function Hero() {
             <div className="hero-section-profile-main">
               <div className="hero-section-profile-name-row">
                 <h1 className="hero-section-profile-name">
-                  {profile.name}
+                  <span className="profile-name-text">
+                    {profile.name}
+                    <svg className="profile-name-underline" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M2 7 C65 0 130 0 198 6" pathLength="100" />
+                      <path d="M196 5 C145 5 100 1 4 4" pathLength="100" />
+                    </svg>
+                  </span>
+                  <svg className="profile-verified-badge" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#1d9bf0" d="M22.25 12c0-1.43-.88-2.67-2.17-3.2.53-1.29.26-2.79-.75-3.8s-2.51-1.28-3.8-.75C15 2.96 13.76 2.08 12.33 2.08s-2.67.88-3.2 2.17c-1.29-.53-2.79-.26-3.8.75s-1.28 2.51-.75 3.8C3.29 9.33 2.41 10.57 2.41 12s.88 2.67 2.17 3.2c-.53 1.29-.26 2.79.75 3.8s2.51 1.28 3.8.75c.53 1.29 1.77 2.17 3.2 2.17s2.67-.88 3.2-2.17c1.29.53 2.79.26 3.8-.75s1.28-2.51.75-3.8c1.29-.53 2.17-1.77 2.17-3.2Z" />
+                    <path d="m8 12 2.7 2.7 5.5-5.5" fill="none" stroke="#fff" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </h1>
               </div>
               <p className="hero-section-profile-username">
