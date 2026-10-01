@@ -16,9 +16,9 @@ export const profile = {
   location: "Delhi, India",
   bio: "I build scalable, production-ready web applications, with a focus on real-time systems and developer tools. Currently exploring AI and GenAI engineering.",
   bioLines: [
-    "Hi, I am a **Full Stack Developer**",
-    "Building **real-time systems**, developer tools and production-ready web applications.",
-    "Currently expanding into **AI / GenAI engineering**, and turning ideas into useful products.",
+    "Hi, I’m a **Full Stack Developer**.",
+    "Focused on building **scalable**, **reliable** and **high performance** applications.",
+    "Open to **full-time**, **remote**, and **freelance** opportunities.",
   ],
   status: "Building MindMora",
   handle: "uviii_03",
@@ -66,9 +66,9 @@ export const experience = [
     url: null as string | null,
     initials: "A",
     details: [
-      "Delivered 7 core modules for the Super Admin Dashboard with Next.js, TypeScript and TanStack Query.",
+      "Delivered 7 core modules for the Admin Dashboard with Next.js, TypeScript and TanStack Query.",
       "Built 30+ responsive components and banner sections, integrating REST APIs for dynamic content.",
-      "Worked with 10 developers on feature delivery, debugging and weekly code reviews.",
+      "Worked with developers on feature delivery, debugging and weekly code reviews.",
     ],
   },
 ];

@@ -13,6 +13,8 @@ import {
 } from "./components/HomeSections";
 import Projects from "./components/Projects";
 import ClickFeedback from "./components/ClickFeedback";
+import SidePattern from "./components/SidePattern";
+import SnoopyGutter from "./components/SnoopyGutter";
 import Activity from "./components/Activity";
 import Support from "./pages/Support";
 import {
@@ -23,6 +25,8 @@ import {
 export default function App() {
   return (
     <>
+      <SidePattern />
+      <SnoopyGutter />
       <a href="#main" className="skip-link">
         Skip to content
       </a>

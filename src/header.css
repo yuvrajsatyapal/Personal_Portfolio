@@ -2,7 +2,7 @@
 .portfolio-header.is-scrolled { top: 12px; max-width: 640px; border-radius: 40px; border-color: #303436; box-shadow: 0 6px 20px rgb(0 0 0 / 22%); }
 .portfolio-header-inner { margin: auto; padding: 12px 18px; display: flex; align-items: center; gap: 28px; }
 .header-brand { color: #fff; font-size: 24px; font-weight: 750; letter-spacing: -1px; line-height: 1; }
-.header-navigation { display: flex; align-items: center; gap: 20px; }
+.header-navigation { display: flex; align-items: center; gap: 26px; }
 .header-link { color: #aaa; padding: 8px 0; font-size: 16px; font-weight: 500; background: none; border: 0; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
 .header-link:hover, .header-link.active { color: #fff; }
 .header-link svg { width: 16px; height: 16px; transition: transform .15s; }
@@ -43,7 +43,7 @@
 @media (max-width: 700px) {
   .portfolio-header-inner { padding: 12px 18px; gap: 16px; }
   .portfolio-header.is-scrolled { max-width: calc(100% - 24px); }
-  .header-navigation { gap: 14px; }
+  .header-navigation { gap: 18px; }
   .header-link { font-size: 13px; }
   .header-brand { font-size: 21px; }
   .header-actions { gap: 12px; }

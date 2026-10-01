@@ -1,0 +1,21 @@
+.snoopy-gutter {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: calc(50% - 374px);
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.snoopy-gutter-left { left: 0; }
+.snoopy-gutter-right { right: 0; }
+.snoopy-gutter img {
+  display: block;
+  position: absolute;
+  bottom: 8px;
+  image-rendering: pixelated;
+  max-width: none;
+  user-select: none;
+}
+@media (max-width: 1151px) { .snoopy-gutter { display: none; } }
+@media (prefers-reduced-motion: reduce) { .snoopy-z, .snoopy-woodstock, .snoopy-doghouse { display: none; } }

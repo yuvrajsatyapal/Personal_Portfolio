@@ -12,7 +12,7 @@ import Icon from "../components/Icon";
 export function Resume() {
   return (
     <div className="standard-container secondary-page">
-      <Title>/resume</Title>
+      <Title>Resume</Title>
       <p className="resume-description">
         My resume — view it below or download a copy.
       </p>

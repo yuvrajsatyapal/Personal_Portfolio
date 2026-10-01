@@ -6,11 +6,9 @@ import "../header.css";
 
 const destinations = [
   { label: "Home", detail: "Portfolio overview", to: "/" },
-  { label: "About", detail: "About Yuvraj", to: "/#about" },
   { label: "Projects", detail: "All projects", to: "/projects" },
   { label: "Resume", detail: "Experience and qualifications", to: "/resume" },
   { label: "Analytics", detail: "Portfolio analytics", to: "/analytics" },
-  { label: "Support", detail: "Support my work", to: "/support" },
   { label: "Tech Stack", detail: "Languages, frameworks and tools", to: "/#skills" },
   { label: "Experience", detail: "Internship experience", to: "/#experience" },
   { label: "Education", detail: "Degree and institute", to: "/#education" },

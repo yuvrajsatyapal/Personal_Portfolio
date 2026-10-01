@@ -973,6 +973,24 @@ select option {
 }
 #root::before { left: calc(50% - 374px); }
 #root::after { right: calc(50% - 374px); }
+.side-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.side-pattern-gutter {
+  position: absolute;
+  inset-block: 0;
+  width: max(0px, calc(50% - 374px));
+  height: 100%;
+  opacity: .145;
+}
+.side-pattern-left { left: 0; }
+.side-pattern-right { right: 0; }
+:root[data-theme="light"] .side-pattern-gutter { opacity: .22; }
+@media (max-width: 1023px) { .side-pattern { display: none; } }
 :root[data-theme="light"] #root { --side-rail-line: #d6d9dc; }
 @media (max-width: 767px) {
   #root::before,
