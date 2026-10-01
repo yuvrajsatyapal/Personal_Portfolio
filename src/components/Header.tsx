@@ -2,21 +2,26 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { transitionTheme } from "../lib/theme-transition";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FiSearch, FiArrowUpRight, FiX } from "react-icons/fi";
+import { FiSearch, FiX } from "react-icons/fi";
 import { projects } from "../data/portfolio";
 import "../header.css";
 
 const destinations = [
-  { label: "Home", detail: "Portfolio overview", to: "/" },
-  { label: "Projects", detail: "All projects", to: "/projects" },
-  { label: "Resume", detail: "Experience and qualifications", to: "/resume" },
-  { label: "Analytics", detail: "Portfolio analytics", to: "/analytics" },
-  { label: "Tech Stack", detail: "Languages, frameworks and tools", to: "/#skills" },
-  { label: "Experience", detail: "Internship experience", to: "/#experience" },
-  { label: "Education", detail: "Degree and institute", to: "/#education" },
-  { label: "Contact", detail: "Let's Connect", to: "/#contact" },
-  ...projects.map(project => ({ label: project.name, detail: project.description, to: `/projects#project-${project.id}` })),
+  { label: "Home", detail: "Portfolio overview", to: "/", shortcut: "H" },
+  { label: "Projects", detail: "All projects", to: "/projects", shortcut: "P" },
+  { label: "Resume", detail: "Experience and qualifications", to: "/resume", shortcut: "R" },
+  { label: "Analytics", detail: "Portfolio analytics", to: "/analytics", shortcut: "A" },
+  { label: "Tech Stack", detail: "Languages, frameworks and tools", to: "/#skills", shortcut: "T" },
+  { label: "Experience", detail: "Internship experience", to: "/#experience", shortcut: "W" },
+  { label: "Education", detail: "Degree and institute", to: "/#education", shortcut: "E" },
+  { label: "Contact", detail: "Let's Connect", to: "/#contact", shortcut: "C" },
+  ...projects.map((project, index) => ({ label: project.name, detail: project.description, to: `/projects#project-${project.id}`, shortcut: String(index + 1) })),
 ];
+function shortcutDestination(event: { key: string; code: string; shiftKey: boolean; metaKey: boolean; ctrlKey: boolean; altKey: boolean }) {
+  if (!event.shiftKey || event.metaKey || event.ctrlKey || event.altKey) return;
+  const key = event.code.startsWith("Digit") ? event.code.slice(5) : event.key.toUpperCase();
+  return destinations.find(item => item.shortcut === key);
+}
 
 function SearchDialog({ onClose }: { onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -39,7 +44,13 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
   return (
     <dialog ref={dialog} className="portfolio-search" aria-modal="true" aria-labelledby="search-title" onCancel={event => { event.preventDefault(); onClose(); }}
       onClick={event => { if (event.target === event.currentTarget) { const r = event.currentTarget.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) onClose(); } }}
-      onKeyDown={event => { if (event.key === "Escape") { event.preventDefault(); onClose(); } }}>
+      onKeyDown={event => {
+        if (event.key === "Escape") { event.preventDefault(); onClose(); return; }
+        if (!query.trim() && !event.nativeEvent.isComposing && !event.repeat) {
+          const destination = shortcutDestination(event);
+          if (destination) { event.preventDefault(); event.stopPropagation(); select(destination.to); }
+        }
+      }}>
       <h2 id="search-title" className="sr-only">Search portfolio</h2>
       <div className="search-field">
         <FiSearch aria-hidden="true" />
@@ -57,8 +68,8 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
       </div>
       <div className="search-results" id="search-results" role="listbox" aria-label="Search results">
         {results.map((item, index) => (
-          <button key={item.to} id={`search-result-${index}`} className="search-result" role="option" aria-selected={index === active} onMouseEnter={() => setActive(index)} onClick={() => select(item.to)}>
-            <span><strong>{item.label}</strong><small>{item.detail}</small></span><FiArrowUpRight aria-hidden="true" />
+          <button key={item.to} id={`search-result-${index}`} className="search-result" role="option" aria-selected={index === active} aria-keyshortcuts={`Shift+${item.shortcut}`} onMouseEnter={() => setActive(index)} onClick={() => select(item.to)}>
+            <span><strong>{item.label}</strong><small>{item.detail}</small></span><kbd className="search-result-shortcut">shift + {item.shortcut}</kbd>
           </button>
         ))}
       </div>
@@ -69,6 +80,7 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
 }
 
 export default function Header() {
+  const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(() => window.scrollY > 50);
   const [light, setLight] = useState(() => document.documentElement.dataset.theme === "light");
@@ -88,11 +100,15 @@ export default function Header() {
   }, []);
   useEffect(() => {
     function keydown(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setSearchOpen(open => !open); }
+      if (event.defaultPrevented || event.isComposing || event.repeat) return;
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setSearchOpen(open => !open); return; }
+      if (searchOpen || (event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable]:not([contenteditable='false'])"))) return;
+      const destination = shortcutDestination(event);
+      if (destination) { event.preventDefault(); navigate(destination.to); }
     }
     window.addEventListener("keydown", keydown);
     return () => { window.removeEventListener("keydown", keydown); };
-  }, []);
+  }, [navigate, searchOpen]);
   return (
     <>
       <nav className={"portfolio-header" + (scrolled ? " is-scrolled" : "")} aria-label="Main navigation">

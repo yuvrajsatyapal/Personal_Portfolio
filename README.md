@@ -1,59 +1,187 @@
-# Yuvraj Satyapal — Portfolio
+# Yuvraj Satyapal — Personal Portfolio
 
-React + TypeScript portfolio recreating the layout, typography, colors and component treatment of https://manixh.vercel.app/, personalized with Yuvraj's supplied content.
+A responsive developer portfolio showcasing my projects, experience, education, technical skills, and coding activity. Built with React and TypeScript, with live activity data and website analytics served through Vercel Functions.
 
-## Run
+## **Live - [View Portfolio](https://yuvraj-satyapal.vercel.app/)**
 
-```sh
-npm install
+## Screenshots
+
+### Desktop
+
+![Portfolio homepage on desktop](assets/readme/home-desktop.jpg)
+
+### Projects
+
+![FlowBoard and Trimly project cards](assets/readme/projects-desktop.jpg)
+
+### Mobile
+
+![Portfolio homepage on mobile](assets/readme/home-mobile.jpg)
+
+## Features
+
+- Responsive layouts with dark and light themes.
+- Project cards with live demos, source links, and expandable details.
+- A muted FlowBoard video preview that plays on hover, with manual playback controls.
+- Live GitHub contribution and LeetCode submission calendars.
+- A Google Drive resume preview and download link.
+- Visitor and page-view analytics with interactive charts and period filters.
+- Cached analytics data and a remembered period selection across page navigation.
+- Search for pages, sections, and projects, with keyboard shortcuts.
+- Contact links, hover tooltips, and subtle interface animations.
+
+## Tech Stack
+
+| Area             | Technology                    |
+| ---------------- | ----------------------------- |
+| Frontend         | React 19, TypeScript          |
+| Build tooling    | Vite 7                        |
+| Routing          | React Router                  |
+| Data caching     | TanStack Query                |
+| Styling          | CSS, Figtree, JetBrains Mono  |
+| Icons            | React Icons                   |
+| APIs and hosting | Vercel Functions, Vercel      |
+| Website tracking | Vercel Web Analytics          |
+| Testing          | Vitest, React Testing Library |
+
+## Getting Started
+
+Use Node.js 22.12 or later and npm.
+
+```bash
+npm ci
 npm run dev
-npm test
-npm run typecheck
-npm run build
 ```
 
-The development server runs at http://127.0.0.1:3000.
+Open [localhost:3000](http://127.0.0.1:3000). If that port is occupied, Vite selects the next available port and prints its address.
 
-## Personalize
+The site can run without analytics credentials. To enable the traffic dashboard locally, copy the environment template and fill in your values:
 
-Edit `src/data/portfolio.ts`. Components render the typed data rather than embedding personal information.
-
-- `profile`: bio, bio bullets (use `**bold**` for emphasis), location, photo, public email, resume URL and portfolio URL.
-- `socials`: LinkedIn, GitHub and LeetCode.
-- `education`, `experience`, `projects`, `skills`, `tools`, `achievements`, `uses`: the supplied portfolio content.
-- `support`: your own payment links, UPI ID and wallets. Empty fields produce disabled controls; there are no reference payment destinations.
-- `site`: repository link, optional analytics endpoint, optional blog content, LeetCode endpoint.
-
-### Pending assets and links
-
-Profile photo: replace the clean initials placeholder by setting `profile.photo` to a file in `public/images/` or a URL. Resume: add `public/resume/resume.pdf` and set `profile.resume = '/resume/resume.pdf'`. Until then the resume page displays a summary of supplied content and a disabled PDF CTA.
-
-All four project GitHub/demo links are `null`. Add them when available. The SVG project previews are clearly labeled **interface concepts**, not screenshots of your applications. Replace each project's `image` with a real screenshot when ready.
-
-Set `profile.siteUrl` after deployment. The profile QR currently points to your supplied LinkedIn profile until the portfolio URL is configured.
-
-## GitHub and LeetCode activity
-
-The `/api/github` endpoint reads the public GitHub calendar for `achievements.githubUsername`. Both activity sections use seven-row, Sunday-aligned calendars with month labels, green intensity levels, and exact counts inside active days. Zero days remain blank. Calendars scroll horizontally and initially show the most recent months; keyboard users can focus the calendar and use the arrow keys. GitHub totals count contributions; LeetCode totals count submissions, while the separate solved-problems statistic comes from LeetCode.
-
-### Live LeetCode activity
-
-The `/api/leetcode` endpoint requests public statistics and submission history from LeetCode GraphQL for `achievements.leetcodeUsername`. The widget displays live solved counts and a year of activity; it does not substitute a hardcoded count on failure. Development and Vercel use the same normalization and fetching code. The response is cached by Vercel for 30 minutes. An unavailable upstream produces a retry state.
-
-## Analytics
-
-No third-party tracking scripts from the reference are included. The Analytics page displays a clear unconnected state until `site.analyticsEndpoint` is set. The endpoint should accept `period=24h|7d|30d` and return:
-
-```json
-{"pageviews":120,"visitors":80,"series":[{"label":"2026-10-01","pageviews":20,"visitors":12}]}
+```bash
+cp .env.example .env.local
 ```
 
-These values illustrate the API shape only; no sample traffic is rendered. Connect your analytics provider server-side; never put API tokens in client config.
+Restart the development server after changing environment variables.
 
-## Deploy
+## Commands
 
-Import the folder into Vercel, use `npm run build` and `dist` as the output directory. `vercel.json` handles client routes and Vercel serves `api/leetcode.ts` as a serverless endpoint. A plain static host can serve the site, but needs a separately hosted LeetCode endpoint and an SPA fallback. `npm run preview` previews the static build; the live API runs via `npm run dev` or Vercel.
+| Command                 | Purpose                                                        |
+| ----------------------- | -------------------------------------------------------------- |
+| `npm run dev`           | Start the development server and local API middleware          |
+| `npm run build`         | Check frontend and API types, then create the production build |
+| `npm run preview`       | Preview the static production build                            |
+| `npm run typecheck`     | Check frontend and API types                                   |
+| `npm run typecheck:api` | Check Vercel Functions with Node-compatible module resolution  |
+| `npm test`              | Run the test suite                                             |
 
-## Credits
+`npm run preview` serves the static frontend; it does not run the Vercel Functions. Use the development server or a Vercel deployment to access the APIs.
 
-Visual reference: [Manish Kumar's portfolio](https://manixh.vercel.app/). Published design documentation: [ig-imanish/manixh](https://github.com/ig-imanish/manixh), MIT; retained in `LICENSE` and `docs/reference-design.md`. Reference CSS was used to match the requested visual design. The portfolio content, editable React implementation and illustrative project SVGs were created for this project.
+## Project Structure
+
+```text
+api/                  Vercel Functions for analytics, GitHub, and LeetCode
+public/               Images, videos, and audio assets
+src/
+  components/         Navigation, project cards, charts, and shared UI
+  data/portfolio.ts   Profile, projects, skills, experience, and site configuration
+  lib/                Data fetching, normalization, and interface utilities
+  pages/              Resume, analytics, and other pages
+  App.tsx             Routes and the shared query provider
+  main.tsx            Application entry point and analytics tracking
+  *.css               Interface and responsive styles
+tests/                Component and behavior tests
+.env.example          Server-side analytics configuration template
+vercel.json           SPA routing configuration
+```
+
+## Updating Portfolio Content
+
+Edit `src/data/portfolio.ts` to change:
+
+- Profile information, biography, photo, and contact details.
+- Social links, education, and work experience.
+- Project descriptions, screenshots, technology lists, and URLs.
+- GitHub and LeetCode usernames.
+- Site endpoints and optional support information.
+
+Place screenshots and profile images in `public/images/`. The FlowBoard preview is stored at `public/videos/flowboard-preview.mp4`; its path is configured in the project's `video` field. Projects without a video use their screenshot.
+
+## Updating the Resume
+
+The resume uses a single Google Drive file ID configured as `resumeDriveFileId` in `src/data/portfolio.ts`. The preview and download URLs are generated from this ID.
+
+To update the resume without changing code:
+
+1. Open the existing PDF in Google Drive.
+2. Use **Manage versions → Upload new version** to replace its contents.
+3. Keep the file shared so visitors can view it.
+
+Uploading a new version preserves the file ID. If you create a separate Drive file instead, update `resumeDriveFileId` and redeploy.
+
+The PDF viewer remains mounted after its first visit during in-app navigation, preserving the loaded preview when returning to the resume page.
+
+## Live Activity APIs
+
+| Endpoint                   | Data                                                                                   |
+| -------------------------- | -------------------------------------------------------------------------------------- |
+| `/api/github`              | Public contribution calendar for the configured GitHub username                        |
+| `/api/leetcode`            | Solved-problem statistics and submission activity for the configured LeetCode username |
+| `/api/analytics?period=7d` | Production page views, visitors, chart data, and available previous-period totals      |
+
+GitHub and LeetCode responses are cached at the deployment edge for 30 minutes. If a service is unavailable, the interface offers a retry rather than displaying fabricated activity.
+
+## Analytics Configuration
+
+Enable **Web Analytics** for the project in Vercel. The application already mounts the tracking component.
+
+The public analytics dashboard reads the collected metrics through a server-side API. Add these variables in **Vercel → Project Settings → Environment Variables**:
+
+| Variable                      | Value                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------ |
+| `VERCEL_ANALYTICS_TOKEN`      | A Vercel access token with access to the project                         |
+| `VERCEL_ANALYTICS_PROJECT_ID` | Project ID from Project Settings → General                               |
+| `VERCEL_ANALYTICS_TEAM_ID`    | Team ID from Team Settings → General; omit for personal-account projects |
+
+Keep these values server-side. Do not prefix them with `VITE_` or commit environment files containing credentials.
+
+The dashboard supports **24H**, **7D**, and **30D**. Successful responses are cached at the deployment edge for five minutes. TanStack Query retains inactive client results for 30 minutes, so returning to a previously loaded period does not reload the chart. The selected period is stored for the browser session; **Refresh** explicitly requests updated data.
+
+Growth percentages appear only when a nonzero previous-period total is available. Missing comparison data and zero baselines do not display a growth label. Available reporting history depends on the project's analytics plan and collection start date.
+
+## Keyboard Shortcuts
+
+Open search with **Ctrl + K** on Windows/Linux or **⌘ + K** on macOS. Use **↑ / ↓** to move through results, **Enter** to open one, and **Escape** to close search.
+
+| Shortcut          | Destination                  |
+| ----------------- | ---------------------------- |
+| Shift + H         | Home                         |
+| Shift + P         | Projects                     |
+| Shift + R         | Resume                       |
+| Shift + A         | Analytics                    |
+| Shift + T         | Tech Stack                   |
+| Shift + W         | Experience                   |
+| Shift + E         | Education                    |
+| Shift + C         | Contact                      |
+| Shift + 1 / 2 / 3 | FlowBoard / Trimly / AvoChat |
+
+Destination shortcuts work in the empty search menu and outside editable fields. They do not interrupt an existing search query.
+
+## Deploying to Vercel
+
+Import the repository and use these settings:
+
+| Setting            | Value           |
+| ------------------ | --------------- |
+| Root Directory     | `./`            |
+| Application Preset | Vite            |
+| Install Command    | `npm ci`        |
+| Build Command      | `npm run build` |
+| Output Directory   | `dist`          |
+
+Add the analytics environment variables before deploying. If you add or change them afterward, redeploy for the Functions to use the updated values.
+
+`vercel.json` sends frontend routes to `index.html` while leaving `/api/` routes to the serverless Functions. A static-only host requires separately hosted API endpoints and an SPA fallback.
+
+## Contact
+
+[LinkedIn](https://www.linkedin.com/in/yuvraj-satyapal) • [GitHub](https://github.com/yuvrajsatyapal) • [LeetCode](https://leetcode.com/u/yuvraj_satyapal/) • [Email](mailto:yuvrajsatyapal21@gmail.com)

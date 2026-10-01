@@ -224,7 +224,7 @@ export const site = {
     duration: 500,
   },
   repoUrl: null as string | null,
-  analyticsEndpoint: null as string | null,
+  analyticsEndpoint: "/api/analytics" as string | null,
   leetcodeEndpoint: "/api/leetcode",
   githubEndpoint: "/api/github",
 };

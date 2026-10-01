@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
@@ -57,12 +57,15 @@ describe("portfolio flows", () => {
       screen.getByRole("button", { name: "Copy wallet address" }),
     ).toBeDisabled();
   });
-  it("shows an honest unconfigured analytics state", () => {
+  it("shows an honest unavailable state when the analytics API fails", async () => {
+    const request = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("unavailable", { status: 503 }));
     open("/analytics");
-    expect(screen.getByText("Analytics not connected")).toBeVisible();
+    expect(await screen.findByText("Analytics temporarily unavailable")).toBeVisible();
+    expect(request).toHaveBeenCalledWith("/api/analytics?period=7d", expect.anything());
     expect(
       screen.getByRole("button", { name: "Refresh analytics" }),
     ).toBeVisible();
+    request.mockRestore();
   });
   it("handles unknown routes", () => {
     open("/missing");

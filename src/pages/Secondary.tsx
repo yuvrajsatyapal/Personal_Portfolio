@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HiDownload } from "react-icons/hi";
+import { useQuery } from "@tanstack/react-query";
+import { HiCog } from "react-icons/hi";
+import { AnalyticsChart, AnalyticsGrowth, type AnalyticsData } from "../components/AnalyticsChart";
 import {
   profile,
   education,
@@ -81,61 +84,65 @@ export function Resume() {
     </div>
   );
 }
-interface AnalyticsData {
-  pageviews: number;
-  visitors: number;
-  series: { label: string; pageviews: number; visitors: number }[];
-}
 export function Analytics({ embedded = false }: { embedded?: boolean }) {
-  const [period, setPeriod] = useState("7d");
-  const [refresh, setRefresh] = useState(0);
-  const [data, setData] = useState<AnalyticsData | null>(null);
-  const [state, setState] = useState("idle");
+  const [period, setPeriod] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem("analytics-period");
+      if (saved === "24h" || saved === "7d" || saved === "30d") return saved;
+    } catch { /* Storage can be unavailable in private browsing. */ }
+    return "7d";
+  });
   useEffect(() => {
-    if (!site.analyticsEndpoint) return;
-    const controller = new AbortController();
-    setData(null);
-    setState("loading");
-    fetch(
-      site.analyticsEndpoint +
-        (site.analyticsEndpoint.includes("?") ? "&" : "?") +
-        "period=" +
-        period,
-      { signal: controller.signal },
-    )
-      .then(async (r) => {
-        if (!r.ok) throw new Error();
-        const d = (await r.json()) as AnalyticsData;
-        if (
-          typeof d.pageviews !== "number" ||
-          typeof d.visitors !== "number" ||
-          !Array.isArray(d.series)
-        )
-          throw new Error();
-        setData(d);
-        setState("ready");
-      })
-      .catch(() => {
-        if (!controller.signal.aborted) setState("error");
-      });
-    return () => controller.abort();
-  }, [period, refresh]);
+    try { sessionStorage.setItem("analytics-period", period); } catch { /* Keep in-memory selection. */ }
+  }, [period]);
+  const { data, isPending, refetch, isFetching } = useQuery({
+    queryKey: ["analytics", site.analyticsEndpoint, period],
+    enabled: Boolean(site.analyticsEndpoint),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: false,
+    queryFn: async ({ signal }) => {
+      const endpoint = site.analyticsEndpoint!;
+      const response = await fetch(`${endpoint}${endpoint.includes("?") ? "&" : "?"}period=${period}`, { signal });
+      if (!response.ok) throw new Error("Analytics unavailable");
+      const stats = await response.json() as AnalyticsData;
+      if (!Number.isFinite(stats.pageviews) || !Number.isFinite(stats.visitors) || !Array.isArray(stats.series))
+        throw new Error("Invalid analytics response");
+      return stats;
+    },
+  });
   return (
     <section
       id="analytics"
       className={`standard-container${embedded ? "" : " secondary-page"}`}
     >
       <Title>Analytics</Title>
+      <div className="analytics-metrics">
+        <div>
+          <span>Visitors</span>
+          <strong>{data?.visitors.toLocaleString() ?? "—"}</strong>
+          {data && <AnalyticsGrowth current={data.visitors} previous={data.previous?.visitors} />}
+        </div>
+        <div>
+          <span>Page Views</span>
+          <strong>{data?.pageviews.toLocaleString() ?? "—"}</strong>
+          {data && <AnalyticsGrowth current={data.pageviews} previous={data.previous?.pageviews} />}
+        </div>
+      </div>
+      <div className="analytics-chart">
       <div className="analytics-controls">
         <span>
-          <Icon name="chart" />
-          Traffic overview
+          <HiCog aria-hidden="true" />
+          <span>~/analytics.tsx</span>
         </span>
         <div role="group" aria-label="Analytics period">
           {[
-            ["24h", "24h"],
-            ["7d", "7 days"],
-            ["30d", "30 days"],
+            ["24h", "24H"],
+            ["7d", "7D"],
+            ["30d", "30D"],
           ].map(([v, l]) => (
             <button
               key={v}
@@ -148,49 +155,19 @@ export function Analytics({ embedded = false }: { embedded?: boolean }) {
           ))}
         </div>
       </div>
-      <div className="analytics-metrics">
-        <div>
-          <span>Page views</span>
-          <strong>{data?.pageviews.toLocaleString() ?? "—"}</strong>
-        </div>
-        <div>
-          <span>Visitors</span>
-          <strong>{data?.visitors.toLocaleString() ?? "—"}</strong>
-        </div>
+      <div className="analytics-legend" aria-label="Chart legend">
+        <span><i className="visitors" />Visitors</span>
+        <span><i className="pageviews" />Page Views</span>
       </div>
-      <div className="analytics-chart">
         {data ? (
-          <>
-            <div
-              className="bar-chart"
-              role="img"
-              aria-label="Page views by time period"
-            >
-              {data.series.map((s, i) => (
-                <div
-                  key={i}
-                  title={s.label + ": " + s.pageviews + " page views"}
-                  style={{
-                    height:
-                      Math.max(
-                        2,
-                        (s.pageviews /
-                          Math.max(1, ...data.series.map((p) => p.pageviews))) *
-                          100,
-                      ) + "%",
-                  }}
-                />
-              ))}
-            </div>
-            <p className="activity-caption">Page views · {period}</p>
-          </>
+          <AnalyticsChart key={period} data={data} />
         ) : (
           <div className="analytics-empty">
             <Icon name="chart" />
             <h3>
               {!site.analyticsEndpoint
                 ? "Analytics not connected"
-                : state === "loading"
+                : isPending
                   ? "Loading analytics…"
                   : "Analytics temporarily unavailable"}
             </h3>
@@ -211,7 +188,8 @@ export function Analytics({ embedded = false }: { embedded?: boolean }) {
         <button
           aria-label="Refresh analytics"
           className="view-all-btn"
-          onClick={() => setRefresh((n) => n + 1)}
+          disabled={isFetching}
+          onClick={() => void refetch()}
         >
           <Icon name="refresh" />
           Refresh

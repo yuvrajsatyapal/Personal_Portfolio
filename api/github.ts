@@ -1,5 +1,5 @@
-import { getGithub } from "../src/lib/github";
-import { achievements } from "../src/data/portfolio";
+import { getGithub } from "../src/lib/github.js";
+import { achievements } from "../src/data/portfolio.js";
 interface Response {
   status: (code: number) => Response;
   json: (body: unknown) => void;

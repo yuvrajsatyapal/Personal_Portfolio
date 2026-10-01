@@ -155,24 +155,6 @@ export function Contact() {
               </span>
             </span>
           )}
-          <span className="contact-tooltip-wrap">
-            <Link
-              className="contact-link-btn"
-              to="/resume"
-              aria-describedby="connect-tooltip-resume"
-            >
-              <Icon name="resume" colored />
-              Resume
-            </Link>
-            <span
-              className="contact-tooltip"
-              role="tooltip"
-              id="connect-tooltip-resume"
-            >
-              <strong>Resume</strong>
-              <span>{profile.name}</span>
-            </span>
-          </span>
         </div>
       </div>
     </section>

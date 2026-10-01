@@ -1,4 +1,4 @@
-import type { CalendarData } from "./calendar";
+import type { CalendarData } from "./calendar.js";
 export interface GithubStats {
   calendar: CalendarData;
 }

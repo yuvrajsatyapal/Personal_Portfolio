@@ -1,5 +1,5 @@
-import { getLeetcode } from "../src/lib/leetcode";
-import { achievements } from "../src/data/portfolio";
+import { getLeetcode } from "../src/lib/leetcode.js";
+import { achievements } from "../src/data/portfolio.js";
 interface Response {
   status: (code: number) => Response;
   json: (body: unknown) => void;

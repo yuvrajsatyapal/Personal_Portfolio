@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, useMatch } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Navbar,
   Footer,
@@ -36,7 +37,9 @@ function PersistentResume() {
 }
 
 export default function App() {
+  const [queryClient] = useState(() => new QueryClient());
   return (
+    <QueryClientProvider client={queryClient}>
     <>
       <SidePattern />
       <SnoopyGutter />
@@ -97,5 +100,6 @@ export default function App() {
       </main>
       <Footer />
     </>
+    </QueryClientProvider>
   );
 }
