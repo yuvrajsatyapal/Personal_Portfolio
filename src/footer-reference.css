@@ -20,6 +20,44 @@
   margin-bottom: 24px;
   line-height: 1.6;
 }
+.footer-quote-word {
+  display: inline-block;
+  position: relative;
+  text-shadow: 0 0 8px rgb(255 255 255 / 12%);
+  animation: footer-quote-glow 8s ease-in-out infinite;
+}
+.footer-quote-word::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0.25);
+  animation: footer-quote-underline 8s ease-in-out infinite;
+  animation-delay: inherit;
+  animation-duration: inherit;
+}
+@keyframes footer-quote-glow {
+  0%, 25%, 100% {
+    color: #b3b3b3;
+    text-shadow: 0 0 8px rgb(255 255 255 / 12%);
+  }
+  8%, 18% {
+    color: #f2f2f2;
+    text-shadow: 0 0 6px rgb(255 255 255 / 30%), 0 0 14px rgb(255 255 255 / 14%);
+  }
+}
+@keyframes footer-quote-underline {
+  0%, 25%, 100% { opacity: 0; transform: scaleX(0.25); }
+  8%, 18% { opacity: 0.5; transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-quote-word { animation: none; }
+  .footer-quote-word::after { animation: none; display: none; }
+}
 .footer-made {
   font-size: 0.9rem;
   color: #fff;

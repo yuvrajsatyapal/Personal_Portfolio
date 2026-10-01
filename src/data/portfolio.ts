@@ -20,14 +20,14 @@ export const profile = {
     "Building **real-time systems**, developer tools and production-ready web applications.",
     "Currently expanding into **AI / GenAI engineering**, and turning ideas into useful products.",
   ],
-  status: "Building FlowBoard",
+  status: "Building MindMora",
   handle: "uviii_03",
   handleUrl: "https://x.com/uviii_03",
   photo: "/images/yuvraj-profile.png" as string | null,
   email: "yuvrajsatyapal21@gmail.com" as string | null,
   resume: null as string | null,
   siteUrl: null as string | null,
-  quote: "Nothing Is Perfect – But You Can Make It Better.",
+  quote: "Build. Learn. Improve. Repeat.",
 };
 export const socials = [
   {
@@ -155,7 +155,6 @@ export const projects: Project[] = [
     github: "https://github.com/yuvrajsatyapal/AvoChat",
     live: "https://avo-chat.vercel.app/login",
   },
-
 ];
 export const skills = [
   { name: "TypeScript", icon: "typescript", color: "#3178c6", primary: true },
@@ -212,7 +211,12 @@ export const support = {
   wallets: {} as Record<string, string>,
 };
 export const site = {
-  clickFeedback: { sound: "/audio/click.mp3", volume: 0.3, sparkCount: 12, duration: 500 },
+  clickFeedback: {
+    sound: "/audio/click.mp3",
+    volume: 0.3,
+    sparkCount: 12,
+    duration: 500,
+  },
   repoUrl: null as string | null,
   analyticsEndpoint: null as string | null,
   leetcodeEndpoint: "/api/leetcode",

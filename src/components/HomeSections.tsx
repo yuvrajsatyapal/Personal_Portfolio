@@ -14,7 +14,7 @@ import Icon from "./Icon";
 export function Hero() {
   const [tooltipsDismissed, setTooltipsDismissed] = useState(false);
   return (
-    <section className="hero-section">
+    <section id="about" className="hero-section">
       <div className="hero-section-banner-outer">
         <div className="hero-section-profile">
           <div className="hero-section-avatar-wrapper">
@@ -173,7 +173,7 @@ export function Hero() {
 }
 export function Skills() {
   return (
-    <section className="skill-section">
+    <section id="skills" className="skill-section">
       <Title>Tech Stack</Title>
       {[skills, tools].map((row, i) => (
         <div
@@ -208,7 +208,7 @@ export function Skills() {
 export function Experience() {
   const [expanded, setExpanded] = useState<Record<number, boolean>>({});
   return (
-    <section className="experience-section">
+    <section id="experience" className="experience-section">
       <Title>Experience</Title>
       <div className="exp-timeline-container">
         <div className="exp-timeline-line" />
@@ -278,7 +278,7 @@ export function Experience() {
 }
 export function Education() {
   return (
-    <section className="standard-container education-section">
+    <section id="education" className="standard-container education-section">
       <Title>Education</Title>
       <div className="education-card">
         <span className="education-icon">

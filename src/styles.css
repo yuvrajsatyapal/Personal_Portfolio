@@ -901,7 +901,7 @@ select option {
 }
 
 .contact-tooltip-wrap { position: relative; display: inline-flex; }
-.hero-section .about-me .contact-tooltip {
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip {
   position: absolute;
   bottom: calc(100% + 10px);
   left: 50%;
@@ -925,24 +925,59 @@ select option {
   transform: translate(-50%, 4px);
   transition: opacity .15s ease, transform .15s ease, visibility .15s;
 }
-.hero-section .about-me .contact-tooltip strong { color: #f4f4f5; font-size: 12px; font-weight: 600; }
-.hero-section .about-me .contact-tooltip > span { color: #a0a6ac; font-size: 11px; line-height: 16px; overflow-wrap: anywhere; }
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip strong { color: #f4f4f5; font-size: 12px; font-weight: 600; }
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip > span { color: #a0a6ac; font-size: 11px; line-height: 16px; overflow-wrap: anywhere; }
 .contact-tooltip::after {
   content: ""; position: absolute; top: 100%; left: 50%; width: 7px; height: 7px;
   background: #191c1f; border-right: 1px solid #373b3e; border-bottom: 1px solid #373b3e;
   transform: translate(-50%, -3px) rotate(45deg);
 }
-.hero-section .about-me .contact-tooltip-wrap:hover > .contact-tooltip,
-.hero-section .about-me .contact-tooltip-wrap:focus-within > .contact-tooltip {
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip-wrap:hover > .contact-tooltip,
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip-wrap:focus-within > .contact-tooltip {
   opacity: 1; visibility: visible; transform: translate(-50%, 0);
 }
-.hero-section .about-me .contact-tooltip-first > .contact-tooltip { left: 0; transform: translate(0, 4px); }
-.hero-section .about-me .contact-tooltip-first:hover > .contact-tooltip,
-.hero-section .about-me .contact-tooltip-first:focus-within > .contact-tooltip { transform: translate(0, 0); }
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip-first > .contact-tooltip { left: 0; transform: translate(0, 4px); }
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip-first:hover > .contact-tooltip,
+:is(.hero-section .about-me, .contact-me-section) .contact-tooltip-first:focus-within > .contact-tooltip { transform: translate(0, 0); }
 .contact-tooltip-first > .contact-tooltip::after { left: 17px; }
 .contact-tooltip-wrap::before { content: ""; position: absolute; bottom: 100%; left: 0; width: 100%; height: 10px; }
-.hero-section .about-me .tooltips-dismissed .contact-tooltip-wrap > .contact-tooltip { opacity: 0; visibility: hidden; }
-@media (prefers-reduced-motion: reduce) { .hero-section .about-me .contact-tooltip { transition: none; } }
+:is(.hero-section .about-me, .contact-me-section) .tooltips-dismissed .contact-tooltip-wrap > .contact-tooltip { opacity: 0; visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { :is(.hero-section .about-me, .contact-me-section) .contact-tooltip { transition: none; } }
+
+#root {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  --side-rail-line: #292c2e;
+}
+#root::before,
+#root::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  box-sizing: border-box;
+  border-inline: 1px solid var(--side-rail-line);
+  background-image: repeating-linear-gradient(
+    315deg,
+    var(--side-rail-line) 0,
+    var(--side-rail-line) 1px,
+    transparent 0,
+    transparent 50%
+  );
+  background-size: 10px 10px;
+  background-attachment: fixed;
+  pointer-events: none;
+  z-index: -1;
+}
+#root::before { left: calc(50% - 374px); }
+#root::after { right: calc(50% - 374px); }
+:root[data-theme="light"] #root { --side-rail-line: #d6d9dc; }
+@media (max-width: 767px) {
+  #root::before,
+  #root::after { display: none; }
+}
 
 /* Side-by-side project previews with contained hover zoom. */
 .project-card {

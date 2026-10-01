@@ -430,7 +430,7 @@
   color: #aaa;
 }
 .exp-expand-icon {
-  font-size: 0.9rem;
+  font-size: calc(0.9rem - 2px);
   transition: transform 0.25s ease;
 }
 .exp-expand-icon.open {
@@ -676,7 +676,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 0;
 }
 .hero-section-profile {

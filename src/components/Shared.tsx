@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { profile, socials, site } from "../data/portfolio";
+import { Link, useLocation } from "react-router-dom";
+import { profile, socials } from "../data/portfolio";
 import Icon from "./Icon";
 export function External({
   href,
@@ -54,57 +54,33 @@ export function Clock({ compact = false }: { compact?: boolean }) {
     </time>
   );
 }
-export function Navbar() {
-  return (
-    <nav className="navbar" aria-label="Main navigation">
-      <div className="navbar-inner">
-        <div className="navbar-links">
-          {[
-            ["/", "Home"],
-            ["/projects", "Projects"],
-            ["/resume", "Resume"],
-            ["/analytics", "Analytics"],
-            ["/support", "Support"],
-          ].map(([path, label]) => (
-            <NavLink
-              end={path === "/"}
-              key={path}
-              to={path}
-              className={({ isActive }) =>
-                "navbar-link" + (isActive ? " navbar-link-active" : "")
-              }
-            >
-              {label}
-            </NavLink>
-          ))}
-        </div>
-        {site.repoUrl ? (
-          <External
-            href={site.repoUrl}
-            className="navbar-star"
-            title="Star this portfolio on GitHub"
-          >
-            <Icon name="star" />
-          </External>
-        ) : (
-          <Link
-            to="/projects"
-            className="navbar-star"
-            aria-label="Explore featured projects"
-            title="Explore featured projects"
-          >
-            <Icon name="star" />
-          </Link>
-        )}
-      </div>
-    </nav>
-  );
-}
+export { default as Navbar } from "./Header";
 export function Footer() {
+  const quoteWords = profile.quote.trim().split(/\s+/);
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p className="footer-quote">“{profile.quote}”</p>
+        <p className="footer-quote">
+          <span className="sr-only">“{profile.quote}”</span>
+          <span aria-hidden="true">
+            “
+            {quoteWords.map((word, index) => (
+              <span key={index}>
+                {index > 0 && " "}
+                <span
+                  className="footer-quote-word"
+                  style={{
+                    animationDelay: `${index * 2}s`,
+                    animationDuration: `${quoteWords.length * 2}s`,
+                  }}
+                >
+                  {word}
+                </span>
+              </span>
+            ))}
+            ”
+          </span>
+        </p>
         <div className="footer-bottom">
           <p className="footer-copyright">
             © {new Date().getFullYear()} Yuvraj Satyapal.
@@ -118,35 +94,85 @@ export function Footer() {
   );
 }
 export function Contact() {
+  const [tooltipsDismissed, setTooltipsDismissed] = useState(false);
   return (
-    <section className="contact-me-section">
+    <section id="contact" className="contact-me-section">
       <div className="contact-me-card">
         <h2 className="contact-me-title">Let's Connect</h2>
         <p className="contact-me-description">
-          Feel free to reach out through any of these platforms
+          You can reach me through any of the platforms below.
         </p>
-        <div className="contact-links">
+        <div
+          className={
+            "contact-links" + (tooltipsDismissed ? " tooltips-dismissed" : "")
+          }
+          onKeyDown={(event) => {
+            if (event.key === "Escape") setTooltipsDismissed(true);
+          }}
+          onFocusCapture={() => setTooltipsDismissed(false)}
+          onMouseEnter={() => setTooltipsDismissed(false)}
+          onMouseLeave={() => setTooltipsDismissed(false)}
+        >
           {socials
             .filter((s) => s.url)
             .map((s) => (
-              <External key={s.name} href={s.url!} className="contact-link-btn">
-                <Icon name={s.icon} />
-                {s.name}
-              </External>
+              <span className="contact-tooltip-wrap" key={s.name}>
+                <External
+                  href={s.url!}
+                  className="contact-link-btn"
+                  describedBy={`connect-tooltip-${s.icon}`}
+                >
+                  <Icon name={s.icon} colored />
+                  {s.name}
+                </External>
+                <span
+                  className="contact-tooltip"
+                  role="tooltip"
+                  id={`connect-tooltip-${s.icon}`}
+                >
+                  <strong>{s.name}</strong>
+                  <span>@{s.handle}</span>
+                </span>
+              </span>
             ))}
           {profile.email && (
-            <External
-              href={"mailto:" + profile.email}
-              className="contact-link-btn"
-            >
-              <Icon name="email" />
-              Email
-            </External>
+            <span className="contact-tooltip-wrap">
+              <External
+                href={"mailto:" + profile.email}
+                className="contact-link-btn"
+                describedBy="connect-tooltip-email"
+              >
+                <Icon name="email" colored />
+                Email
+              </External>
+              <span
+                className="contact-tooltip"
+                role="tooltip"
+                id="connect-tooltip-email"
+              >
+                <strong>Gmail</strong>
+                <span>{profile.email}</span>
+              </span>
+            </span>
           )}
-          <Link className="contact-link-btn" to="/resume">
-            <Icon name="resume" />
-            Resume
-          </Link>
+          <span className="contact-tooltip-wrap">
+            <Link
+              className="contact-link-btn"
+              to="/resume"
+              aria-describedby="connect-tooltip-resume"
+            >
+              <Icon name="resume" colored />
+              Resume
+            </Link>
+            <span
+              className="contact-tooltip"
+              role="tooltip"
+              id="connect-tooltip-resume"
+            >
+              <strong>Resume</strong>
+              <span>{profile.name}</span>
+            </span>
+          </span>
         </div>
       </div>
     </section>
@@ -169,14 +195,20 @@ export function PageLinks({ next }: { next?: { to: string; label: string } }) {
   );
 }
 export function ScrollReset() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
     if (
+      !hash &&
       typeof window.scrollTo === "function" &&
       !navigator.userAgent.includes("jsdom")
-    )
+    ) {
       window.scrollTo({ top: 0, behavior: "instant" });
+    }
+    if (hash)
+      document
+        .getElementById(decodeURIComponent(hash.slice(1)))
+        ?.scrollIntoView?.({ block: "start" });
     document.title = profile.name + " | " + profile.role;
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
 }

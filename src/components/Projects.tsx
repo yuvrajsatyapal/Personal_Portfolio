@@ -7,6 +7,7 @@ export function ProjectCard({ project: p }: { project: Project }) {
   const [open, setOpen] = useState(false);
   return (
     <article
+      id={"project-" + p.id}
       className={"project-card" + (p.featured ? " featured-project" : "")}
     >
       <div className="banner">
@@ -76,7 +77,7 @@ export function ProjectCard({ project: p }: { project: Project }) {
           aria-controls={"details-" + p.id}
           onClick={() => setOpen(!open)}
         >
-          Engineering details{" "}
+          Details{" "}
           <Icon name="chevron" className={open ? "rotated" : ""} />
         </button>
         {open && (

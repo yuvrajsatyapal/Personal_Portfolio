@@ -124,7 +124,7 @@ export function Analytics() {
   }, [period, refresh]);
   return (
     <div className="standard-container secondary-page">
-      <Title>/analytics</Title>
+      <Title>Analytics</Title>
       <p className="resume-description">
         A transparent look at this portfolio's traffic.
       </p>

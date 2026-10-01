@@ -1,0 +1,63 @@
+<!doctype html>
+<!-- Throwaway preview: lightning strikes illuminating the existing tilted hatch lines.
+     Production files remain unchanged. Run npm run dev and open this file's URL.
+     The existing diagonal pattern briefly glows with a lightning strike, then fades. Review before implementation. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Border lightning example</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0b0d0e; color: #ddd; font-family: sans-serif; }
+    iframe { display: block; width: 100%; height: 100dvh; border: 0; }
+    .rail { position: fixed; top: 0; bottom: 0; width: 24px; pointer-events: none; color: #d5edff; }
+    .rail-left { left: calc(50% - 374px); }
+    .rail-right { right: calc(50% - 374px); }
+    .strike { position: absolute; inset: 0; background-image: repeating-linear-gradient(315deg, currentColor 0, currentColor 1px, transparent 0, transparent 50%); background-size: 10px 10px; background-attachment: fixed; opacity: 0; filter: drop-shadow(0 0 3px currentColor) drop-shadow(0 0 7px currentColor); animation: strike 6s ease-out infinite; }
+    .rail-left .strike { animation-delay: -0.6s; }
+    .rail-right .strike { animation-delay: 2.4s; }
+    @keyframes strike {
+      0% { opacity: 0; }
+      3% { opacity: .85; }
+      8% { opacity: .45; }
+      22%, 100% { opacity: 0; }
+    }
+    body[data-variant="B"] .rail { color: #85caff; }
+    body[data-variant="B"] .strike { filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 10px #57a9ff); }
+    body[data-variant="C"] .rail { color: #f0f0f0; }
+    body[data-variant="C"] .strike { filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #fff8); }
+    body.paused .strike { animation-play-state: paused; }
+    .controls { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: 8px; width: max-content; max-width: calc(100% - 24px); padding: 10px 12px; background: #e9ecef; color: #202426; border-radius: 10px; box-shadow: 0 6px 30px #0008; }
+    button { font: inherit; font-size: 12px; color: inherit; cursor: pointer; padding: 7px 9px; border: 1px solid #bdc4c8; border-radius: 5px; background: transparent; }
+    button:hover { background: #d3d9dc; }
+    button:focus-visible { outline: 2px solid #202426; outline-offset: 2px; }
+    .label { min-width: 155px; text-align: center; font-size: 12px; }
+    .mobile-note { display: none; position: fixed; top: 20px; left: 20px; right: 20px; padding: 12px; background: #17191a; border: 1px solid #444; font-size: 13px; }
+    @media (max-width: 767px) { .rail { display: none; } .mobile-note { display: block; } }
+    @media (prefers-reduced-motion: reduce) { .strike { animation: none; opacity: 0; } }
+  </style>
+</head>
+<body data-variant="A" class="paused">
+  <iframe src="/" title="Portfolio context for border lightning preview"></iframe>
+  <div class="rail rail-left" aria-hidden="true"><div class="strike"></div></div>
+  <div class="rail rail-right" aria-hidden="true"><div class="strike"></div></div>
+  <p class="mobile-note">Open this example on desktop to see the side-border animation. The borders remain hidden on mobile.</p>
+  <nav class="controls" aria-label="Lightning prototype controls">
+    <button id="previous" aria-label="Previous style">←</button><span class="label" id="label" aria-live="polite">A · Subtle ice blue</span><button id="next" aria-label="Next style">→</button>
+    <button id="pause">Play</button><button id="replay">Replay</button>
+  </nav>
+  <script>
+    const styles = [{key:'A',name:'Subtle ice blue'}, {key:'B',name:'Electric blue'}, {key:'C',name:'Soft white'}];
+    let index = Math.max(0, styles.findIndex(style => style.key === new URLSearchParams(location.search).get('variant')));
+    function render() { const style = styles[index]; document.body.dataset.variant = style.key; document.querySelector('#label').textContent = `${style.key} · ${style.name}`; const url = new URL(location.href); url.searchParams.set('variant', style.key); history.replaceState(null, '', url); }
+    function cycle(direction) { index = (index + direction + styles.length) % styles.length; render(); }
+    document.querySelector('#previous').onclick = () => cycle(-1);
+    document.querySelector('#next').onclick = () => cycle(1);
+    document.querySelector('#pause').onclick = event => { const paused = document.body.classList.toggle('paused'); event.target.textContent = paused ? 'Play' : 'Pause'; };
+    document.querySelector('#replay').onclick = () => { document.querySelectorAll('.strike').forEach(bolt => { bolt.style.animation = 'none'; void bolt.getBoundingClientRect(); bolt.style.animation = ''; }); };
+    document.addEventListener('keydown', event => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); cycle(event.key === 'ArrowLeft' ? -1 : 1); } });
+    render();
+  </script>
+</body>
+</html>
