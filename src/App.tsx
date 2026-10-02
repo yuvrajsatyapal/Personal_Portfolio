@@ -14,6 +14,7 @@ import {
   Education,
 } from "./components/HomeSections";
 import Projects from "./components/Projects";
+import Seo from "./components/Seo";
 import ClickFeedback from "./components/ClickFeedback";
 import SidePattern from "./components/SidePattern";
 import SnoopyGutter from "./components/SnoopyGutter";
@@ -36,11 +37,12 @@ function PersistentResume() {
   return <div hidden={!active}>{(active || visited) && <Resume />}</div>;
 }
 
-export default function App() {
-  const [queryClient] = useState(() => new QueryClient());
+export default function App({ client }: { client?: QueryClient } = {}) {
+  const [queryClient] = useState(() => client ?? new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
     <>
+      <Seo />
       <SidePattern />
       <SnoopyGutter />
       <a href="#main" className="skip-link">

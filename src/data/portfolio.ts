@@ -15,12 +15,12 @@ export interface Project {
 const resumeDriveFileId = "1r62uOgG4HibN1NIZ8D85VGCCoWA0LK2J";
 export const profile = {
   name: "Yuvraj Satyapal",
-  role: "Full Stack Developer",
+  role: "Software Engineer / Full Stack Developer",
   location: "Delhi, India",
   bio: "I build scalable, production-ready web applications, with a focus on real-time systems and developer tools. Currently exploring AI and GenAI engineering.",
   bioLines: [
-    "Hi, I’m a **Full Stack Developer**.",
-    "Focused on building **scalable**, **reliable** and **high performance** applications.",
+    "Hi, I’m a **Software Engineer** and **Full Stack Developer** based in **Delhi, India**.",
+    "I build **React** and **Next.js** applications with **Node.js** and **PostgreSQL**, focusing on reliability and performance.",
     "Open to **full-time**, **remote**, and **freelance** opportunities.",
   ],
   status: "Building MindMora",
@@ -31,7 +31,7 @@ export const profile = {
   resume: `https://drive.google.com/file/d/${resumeDriveFileId}/view` as string | null,
   resumePreview: `https://drive.google.com/file/d/${resumeDriveFileId}/preview`,
   resumeDownload: `https://drive.google.com/uc?export=download&id=${resumeDriveFileId}`,
-  siteUrl: null as string | null,
+  siteUrl: "https://yuvraj-satyapal.vercel.app/",
   quote: "Build. Learn. Improve. Repeat.",
 };
 export const socials = [
@@ -56,7 +56,8 @@ export const socials = [
 ];
 export const education = {
   degree: "Bachelor of Technology in Information Technology",
-  institute: "Dr. Akhilesh Das Gupta Institute of Professional Studies",
+  institute: "Dr. Akhilesh Das Gupta Institute of Professional Studies (GGSIPU)",
+  location: "Delhi, India",
   dates: "2022 – 2026",
   grade: "CGPA: 8.5",
 };
@@ -72,8 +73,8 @@ export const experience = [
     initials: "A",
     details: [
       "Delivered 7 core modules for the Admin Dashboard with Next.js, TypeScript and TanStack Query.",
-      "Built 30+ responsive components and banner sections, integrating REST APIs for dynamic content.",
-      "Worked with developers on feature delivery, debugging and weekly code reviews.",
+      "Built 30+ reusable responsive components and REST API integrations for the Super Admin Dashboard and RFQ workflows.",
+      "Worked with Next.js, TypeScript, TanStack Query, Node.js, Express.js and PostgreSQL on feature delivery, debugging and weekly code reviews.",
     ],
   },
 ];
@@ -179,6 +180,7 @@ export const skills = [
   { name: "Java", icon: "java", color: "#e76f00" },
   { name: "Python", icon: "python", color: "#3776ab" },
   { name: "SQL", icon: "database", color: "#b5d1de" },
+  { name: "REST APIs", icon: "code", color: "#b5d1de" },
   { name: "HTML", icon: "html", color: "#e34f26" },
   { name: "CSS", icon: "css", color: "#1572b6" },
   { name: "Tailwind CSS", icon: "tailwind", color: "#38bdf8" },

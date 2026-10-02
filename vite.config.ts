@@ -4,12 +4,19 @@ import { loadEnv } from "vite";
 import { getAnalytics, isAnalyticsPeriod } from "./src/lib/analytics";
 import { getGithub } from "./src/lib/github";
 import { getLeetcode } from "./src/lib/leetcode";
+import { renderSeoHead } from "./src/lib/seo";
 import { achievements } from "./src/data/portfolio";
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
   plugins: [
     react(),
+    {
+      name: "development-seo",
+      transformIndexHtml(html, context) {
+        return command === "serve" ? html.replace("<!--seo-head-->", renderSeoHead((context.originalUrl || context.path).split("?")[0])) : html;
+      },
+    },
     {
       name: "leetcode-api",
       configureServer(server) {

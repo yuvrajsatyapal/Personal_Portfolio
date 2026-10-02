@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { projects, type Project } from "../data/portfolio";
 import { External, Title } from "./Shared";
 import Icon from "./Icon";
-export function ProjectCard({ project: p }: { project: Project }) {
+export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project; headingLevel?: 2 | 3 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   const [open, setOpen] = useState(false);
   const video = useRef<HTMLVideoElement>(null);
   const wantsPreview = useRef(false);
@@ -59,6 +60,12 @@ export function ProjectCard({ project: p }: { project: Project }) {
       onMouseLeave={stopPreview}
     >
       <div className="banner">
+        <picture>
+        {p.imageKind === "screenshot" && <source
+          type="image/webp"
+          srcSet={`${p.image.replace(".png", "-700.webp")} 700w, ${p.image.replace(".png", "-1400.webp")} 1400w`}
+          sizes="(max-width: 700px) 100vw, 700px"
+        />}
         <img
           src={p.image}
           alt={
@@ -67,8 +74,10 @@ export function ProjectCard({ project: p }: { project: Project }) {
               ? " — website screenshot"
               : " — illustrative interface preview")
           }
-          loading="lazy"
+          width={3390} height={1900}
+          loading="lazy" decoding="async"
         />
+        </picture>
         {p.video && (
           <video
             ref={video}
@@ -102,7 +111,7 @@ export function ProjectCard({ project: p }: { project: Project }) {
       </div>
       <div className="project-details">
         <div className="project-header-row">
-          <h3 className="project-name">{p.name}</h3>
+          <Heading className="project-name">{p.name}</Heading>
           <div className="project-link-icons">
             {p.live ? (
               <External className="project-pill" href={p.live}>
@@ -148,13 +157,11 @@ export function ProjectCard({ project: p }: { project: Project }) {
           Details{" "}
           <Icon name="chevron" className={open ? "rotated" : ""} />
         </button>
-        {open && (
-          <ul className="engineering-details" id={"details-" + p.id}>
+        <ul className="engineering-details" id={"details-" + p.id} hidden={!open}>
             {p.highlights.map((h) => (
               <li key={h}>{h}</li>
             ))}
           </ul>
-        )}
       </div>
     </article>
   );
@@ -162,9 +169,10 @@ export function ProjectCard({ project: p }: { project: Project }) {
 export default function Projects({ all = false }: { all?: boolean }) {
   return (
     <section className="project-section">
-      <Title>Projects</Title>
+      <Title level={all ? 1 : 2}>Projects</Title>
+      {all && <p className="project-desc">Projects by Yuvraj Satyapal, a Software Engineer and Full Stack Developer in Delhi, India. Other projects include InsightSpend. I’m currently building MindMora.</p>}
       {projects.map((p) => (
-        <ProjectCard key={p.id} project={p} />
+        <ProjectCard key={p.id} project={p} headingLevel={all ? 2 : 3} />
       ))}
       {!all && (
         <div className="view-all-projects right-side">

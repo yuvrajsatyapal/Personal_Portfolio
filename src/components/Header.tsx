@@ -82,9 +82,12 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
 export default function Header() {
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(() => window.scrollY > 50);
-  const [light, setLight] = useState(() => document.documentElement.dataset.theme === "light");
+  const [scrolled, setScrolled] = useState(() => typeof window !== "undefined" && window.scrollY > 50);
+  const [light, setLight] = useState(() => typeof document !== "undefined" && document.documentElement.dataset.theme === "light");
   const toggleSound = useRef<HTMLAudioElement | null>(null);
+  useEffect(() => {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", light ? "#fafafa" : "#0b0d0e");
+  }, [light]);
   useEffect(() => {
     const sound = new Audio("/audio/theme-toggle.mp3");
     sound.volume = .3;
@@ -92,7 +95,7 @@ export default function Header() {
     toggleSound.current = sound;
     return () => { sound.pause(); toggleSound.current = null; };
   }, []);
-  const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
+  const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -111,6 +114,7 @@ export default function Header() {
   }, [navigate, searchOpen]);
   return (
     <>
+      <header>
       <nav className={"portfolio-header" + (scrolled ? " is-scrolled" : "")} aria-label="Main navigation">
         <div className="portfolio-header-inner">
 
@@ -144,6 +148,7 @@ export default function Header() {
           </div>
         </div>
       </nav>
+      </header>
       {searchOpen && <SearchDialog onClose={() => setSearchOpen(false)} />}
     </>
   );

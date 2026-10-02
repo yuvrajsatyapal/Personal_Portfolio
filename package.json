@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 3000",
-    "build": "tsc -b && npm run typecheck:api && vite build",
+    "build": "tsc -b && npm run typecheck:api && vite build && node scripts/prerender.mjs && node scripts/validate-seo.mjs",
     "preview": "vite preview --host 127.0.0.1 --port 3000",
     "test": "vitest run",
     "typecheck": "tsc -b && npm run typecheck:api",
-    "typecheck:api": "tsc -p tsconfig.api.json"
+    "typecheck:api": "tsc -p tsconfig.api.json",
+    "validate:seo": "node scripts/validate-seo.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.104.0",

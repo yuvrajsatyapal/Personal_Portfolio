@@ -19,10 +19,14 @@ export function Hero() {
         <div className="hero-section-profile">
           <div className="hero-section-avatar-wrapper">
             <div className="hero-section-avatar">
+              <picture>
+              {profile.photo === "/images/yuvraj-profile.png" && <source srcSet="/images/yuvraj-profile-320.webp" type="image/webp" />}
               <img
                 src={profile.photo || "/images/profile-placeholder.svg"}
-                alt="Profile photo"
+                alt="Yuvraj Satyapal — Software Engineer and Full Stack Developer"
+                width={1122} height={1402} fetchPriority="high"
               />
+              </picture>
             </div>
           </div>
           <div className="hero-section-profile-info">
@@ -31,6 +35,7 @@ export function Hero() {
                 <h1 className="hero-section-profile-name">
                   <span className="profile-name-text">
                     {profile.name}
+                    <span className="sr-only"> — Software Engineer &amp; Full Stack Developer</span>
                     <svg className="profile-name-underline" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
                       <path d="M2 7 C65 0 130 0 198 6" pathLength="100" />
                       <path d="M196 5 C145 5 100 1 4 4" pathLength="100" />
@@ -222,12 +227,12 @@ export function Experience() {
         {experience.map((e, i) => (
           <div className="exp-timeline-item" key={e.company}>
             <span className={"exp-timeline-dot " + e.status} />
-            <div className="exp-card">
+            <article className="exp-card">
               <div className="exp-header">
                 <div className="exp-header-left">
                   {e.logo ? (
                     <div className="exp-logo company-logo">
-                      <img src={e.logo} alt={`${e.company} logo`} />
+                      <img src={e.logo} alt={`${e.company} logo`} width={256} height={256} loading="lazy" />
                     </div>
                   ) : (
                     <div className="exp-logo initials-logo">{e.initials}</div>
@@ -276,7 +281,7 @@ export function Experience() {
                   ))}
                 </ul>
               </div>
-            </div>
+            </article>
           </div>
         ))}
       </div>

@@ -28,14 +28,15 @@ export function External({
     </a>
   );
 }
-export function Title({ children }: { children: ReactNode }) {
+export function Title({ children, level = 2 }: { children: ReactNode; level?: 1 | 2 }) {
+  const Heading = level === 1 ? "h1" : "h2";
   return (
-    <h2 className="card-title">
+    <Heading className="card-title">
       {children}
       {["top left", "top right", "bottom left", "bottom right"].map((c) => (
         <span key={c} className={"corner " + c} aria-hidden="true" />
       ))}
-    </h2>
+    </Heading>
   );
 }
 export function Clock({ compact = false }: { compact?: boolean }) {
@@ -190,7 +191,6 @@ export function ScrollReset() {
       document
         .getElementById(decodeURIComponent(hash.slice(1)))
         ?.scrollIntoView?.({ block: "start" });
-    document.title = profile.name + " | " + profile.role;
   }, [pathname, hash]);
   return null;
 }

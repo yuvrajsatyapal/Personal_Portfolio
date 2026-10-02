@@ -39,7 +39,7 @@ describe("portfolio flows", () => {
   });
   it("shows the uploaded profile photo without a QR toggle", () => {
     open();
-    expect(screen.getByAltText("Profile photo")).toHaveAttribute("src", "/images/yuvraj-profile.png");
+    expect(screen.getByAltText("Yuvraj Satyapal — Software Engineer and Full Stack Developer")).toHaveAttribute("src", "/images/yuvraj-profile.png");
     expect(screen.queryByRole("button", { name: "Show profile QR code" })).not.toBeInTheDocument();
   });
   it("does not send support to sample payment destinations", () => {

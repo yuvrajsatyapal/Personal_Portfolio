@@ -29,12 +29,12 @@ export default function Support() {
   }
   return (
     <div className="support-layout secondary-page">
-      <Title>/support</Title>
+      <Title level={1}>/support</Title>
       <p className="support-description">
         If my work has helped you, here's how to support it.
       </p>
       <section className="support-section">
-        <h3 className="support-section-title">Quick Support</h3>
+        <h2 className="support-section-title">Quick Support</h2>
         <p className="support-section-desc">
           A little support goes a long way.
         </p>
@@ -96,7 +96,7 @@ export default function Support() {
         </div>
       </section>
       <section className="support-section">
-        <h3 className="support-section-title">UPI (India)</h3>
+        <h2 className="support-section-title">UPI (India)</h2>
         <p className="support-section-desc">
           Instant transfers for supporters in India.
         </p>
@@ -116,7 +116,7 @@ export default function Support() {
         </div>
       </section>
       <section className="support-section">
-        <h3 className="support-section-title">Crypto</h3>
+        <h2 className="support-section-title">Crypto</h2>
         <p className="support-section-desc">Pick a coin, then its network.</p>
         <div className="support-select-row support-select-row-networks">
           <label className="support-select-label">

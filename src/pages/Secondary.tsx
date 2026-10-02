@@ -10,13 +10,14 @@ import {
   experience,
   projects,
   site,
+  skills, tools, achievements,
 } from "../data/portfolio";
 import { External, PageLinks, Title } from "../components/Shared";
 import Icon from "../components/Icon";
 export function Resume() {
   return (
     <div className="standard-container secondary-page">
-      <Title>Resume</Title>
+      <Title level={1}>Resume</Title>
       <div className="resume-actions">
         {profile.resume ? (
           <External className="resume-download-btn" href={profile.resumeDownload}>
@@ -45,46 +46,40 @@ export function Resume() {
             </External>
           </div>
         </>
-      ) : (
-        <div className="resume-summary">
-          <h1>{profile.name}</h1>
-          <p className="resume-role">
-            {profile.role} · {profile.location}
-          </p>
+      ) : <p>Resume PDF coming soon.</p>}
+      <details className="resume-text" open={!profile.resume}>
+        <summary>Read Yuvraj Satyapal’s resume as text</summary>
+        <article className="resume-summary">
+          <h2>{profile.name}</h2>
+          <p className="resume-role">{profile.role} · {profile.location}</p>
           <p>{profile.bio}</p>
           <h2>Experience</h2>
-          {experience.map((e) => (
-            <div key={e.company}>
-              <h3>
-                {e.role} · {e.company}
-              </h3>
-              <p>{e.dates}</p>
-              <ul>
-                {e.details.map((d) => (
-                  <li key={d}>{d}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {experience.map(e => <section key={e.company}>
+            <h3>{e.role} · {e.company}</h3>
+            <p>{e.dates} · {e.location}</p>
+            <ul>{e.details.map(detail => <li key={detail}>{detail}</li>)}</ul>
+          </section>)}
+          <h2>Skills</h2>
+          <p>{[...skills, ...tools].map(skill => skill.name).join(", ")}</p>
           <h2>Selected Projects</h2>
-          {projects.map((p) => (
-            <div key={p.id}>
-              <h3>{p.name}</h3>
-              <p>{p.description}</p>
-            </div>
-          ))}
+          {projects.map(project => <section key={project.id}>
+            <h3><Link to={`/projects#project-${project.id}`}>{project.name}</Link></h3>
+            <p>{project.description}</p>
+          </section>)}
+          <p>Additional projects: InsightSpend. Currently building MindMora.</p>
           <h2>Education</h2>
           <h3>{education.degree}</h3>
-          <p>
-            {education.institute} · {education.dates} · {education.grade}
-          </p>
-        </div>
-      )}
+          <p>{education.institute} · {education.location} · {education.dates} · {education.grade}</p>
+          <h2>Achievements</h2>
+          <p>{achievements.description}</p>
+        </article>
+      </details>
       <PageLinks />
     </div>
   );
 }
 export function Analytics({ embedded = false }: { embedded?: boolean }) {
+  const EmptyHeading = embedded ? "h3" : "h2";
   const [period, setPeriod] = useState(() => {
     try {
       const saved = sessionStorage.getItem("analytics-period");
@@ -119,7 +114,7 @@ export function Analytics({ embedded = false }: { embedded?: boolean }) {
       id="analytics"
       className={`standard-container${embedded ? "" : " secondary-page"}`}
     >
-      <Title>Analytics</Title>
+      <Title level={embedded ? 2 : 1}>Analytics</Title>
       <div className="analytics-metrics">
         <div>
           <span>Visitors</span>
@@ -164,13 +159,13 @@ export function Analytics({ embedded = false }: { embedded?: boolean }) {
         ) : (
           <div className="analytics-empty">
             <Icon name="chart" />
-            <h3>
+            <EmptyHeading>
               {!site.analyticsEndpoint
                 ? "Analytics not connected"
                 : isPending
                   ? "Loading analytics…"
                   : "Analytics temporarily unavailable"}
-            </h3>
+            </EmptyHeading>
             <p>
               {!site.analyticsEndpoint
                 ? "Traffic will appear here once analytics is connected."

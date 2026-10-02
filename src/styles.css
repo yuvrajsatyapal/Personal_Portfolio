@@ -88,7 +88,7 @@ p {
   border-radius: 12px;
   overflow: visible;
 }
-.hero-section-avatar > img {
+.hero-section-avatar img {
   border-radius: 9px;
 }
 .hero-section-avatar-wrapper {
@@ -547,7 +547,7 @@ p {
   font-size: 30px;
   color: #555;
 }
-.analytics-empty h3 {
+.analytics-empty :is(h2, h3) {
   font-size: 15px;
 }
 .analytics-empty p {
@@ -1232,3 +1232,15 @@ select option {
 @media (max-width: 354px) {
   .analytics-legend { font-size: .68rem; gap: 10px; }
 }
+
+/* Readable resume HTML supplements the embedded PDF. */
+.resume-text { margin: 20px 0; font-size: .85rem; line-height: 1.7; }
+.resume-text summary { cursor: pointer; }
+.resume-text .resume-summary { padding-top: 16px; }
+.resume-text .resume-summary h2 { font-size: 1rem; margin: 20px 0 8px; }
+.resume-text .resume-summary h3 { font-size: .9rem; margin: 12px 0 6px; }
+.activity-achievement { font-size: .8rem; margin: 8px 0 12px; }
+
+.hero-section-avatar picture { display: contents; }
+.hero-section-avatar picture img { width: 100%; height: 100%; object-fit: cover; }
+.project-card .banner picture { display: contents; }

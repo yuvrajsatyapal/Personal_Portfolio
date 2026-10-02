@@ -5,5 +5,8 @@ dist/
 !.env.example
 .DS_Store
 *.tsbuildinfo
-tests/
-docs/
+tests/*
+!tests/seo.test.ts
+docs/*
+!docs/seo-plan.md
+!docs/seo.md
