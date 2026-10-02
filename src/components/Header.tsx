@@ -114,7 +114,6 @@ export default function Header() {
   }, [navigate, searchOpen]);
   return (
     <>
-      <header>
       <nav className={"portfolio-header" + (scrolled ? " is-scrolled" : "")} aria-label="Main navigation">
         <div className="portfolio-header-inner">
 
@@ -148,7 +147,6 @@ export default function Header() {
           </div>
         </div>
       </nav>
-      </header>
       {searchOpen && <SearchDialog onClose={() => setSearchOpen(false)} />}
     </>
   );

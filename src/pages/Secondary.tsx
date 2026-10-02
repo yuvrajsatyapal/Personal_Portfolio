@@ -10,7 +10,6 @@ import {
   experience,
   projects,
   site,
-  skills, tools, achievements,
 } from "../data/portfolio";
 import { External, PageLinks, Title } from "../components/Shared";
 import Icon from "../components/Icon";
@@ -46,34 +45,41 @@ export function Resume() {
             </External>
           </div>
         </>
-      ) : <p>Resume PDF coming soon.</p>}
-      <details className="resume-text" open={!profile.resume}>
-        <summary>Read Yuvraj Satyapal’s resume as text</summary>
-        <article className="resume-summary">
-          <h2>{profile.name}</h2>
-          <p className="resume-role">{profile.role} · {profile.location}</p>
+      ) : (
+        <div className="resume-summary">
+          <h1>{profile.name}</h1>
+          <p className="resume-role">
+            {profile.role} · {profile.location}
+          </p>
           <p>{profile.bio}</p>
           <h2>Experience</h2>
-          {experience.map(e => <section key={e.company}>
-            <h3>{e.role} · {e.company}</h3>
-            <p>{e.dates} · {e.location}</p>
-            <ul>{e.details.map(detail => <li key={detail}>{detail}</li>)}</ul>
-          </section>)}
-          <h2>Skills</h2>
-          <p>{[...skills, ...tools].map(skill => skill.name).join(", ")}</p>
+          {experience.map((e) => (
+            <div key={e.company}>
+              <h3>
+                {e.role} · {e.company}
+              </h3>
+              <p>{e.dates}</p>
+              <ul>
+                {e.details.map((d) => (
+                  <li key={d}>{d}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
           <h2>Selected Projects</h2>
-          {projects.map(project => <section key={project.id}>
-            <h3><Link to={`/projects#project-${project.id}`}>{project.name}</Link></h3>
-            <p>{project.description}</p>
-          </section>)}
-          <p>Additional projects: InsightSpend. Currently building MindMora.</p>
+          {projects.map((p) => (
+            <div key={p.id}>
+              <h3>{p.name}</h3>
+              <p>{p.description}</p>
+            </div>
+          ))}
           <h2>Education</h2>
           <h3>{education.degree}</h3>
-          <p>{education.institute} · {education.location} · {education.dates} · {education.grade}</p>
-          <h2>Achievements</h2>
-          <p>{achievements.description}</p>
-        </article>
-      </details>
+          <p>
+            {education.institute} · {education.dates} · {education.grade}
+          </p>
+        </div>
+      )}
       <PageLinks />
     </div>
   );

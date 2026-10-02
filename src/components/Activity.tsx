@@ -72,7 +72,6 @@ export default function Activity({
   return (
     <section className="standard-container activity-section">
       <Title>{github ? "GitHub Contributions" : "LeetCode Activity"}</Title>
-      {!github && <p className="activity-achievement">{achievements.description}</p>}
       <div className="activity-card">
         <div className="activity-header">
           <span>

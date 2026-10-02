@@ -60,12 +60,6 @@ export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project
       onMouseLeave={stopPreview}
     >
       <div className="banner">
-        <picture>
-        {p.imageKind === "screenshot" && <source
-          type="image/webp"
-          srcSet={`${p.image.replace(".png", "-700.webp")} 700w, ${p.image.replace(".png", "-1400.webp")} 1400w`}
-          sizes="(max-width: 700px) 100vw, 700px"
-        />}
         <img
           src={p.image}
           alt={
@@ -75,9 +69,8 @@ export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project
               : " — illustrative interface preview")
           }
           width={3390} height={1900}
-          loading="lazy" decoding="async"
+          loading="lazy"
         />
-        </picture>
         {p.video && (
           <video
             ref={video}
@@ -157,11 +150,13 @@ export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project
           Details{" "}
           <Icon name="chevron" className={open ? "rotated" : ""} />
         </button>
-        <ul className="engineering-details" id={"details-" + p.id} hidden={!open}>
+        {open && (
+          <ul className="engineering-details" id={"details-" + p.id}>
             {p.highlights.map((h) => (
               <li key={h}>{h}</li>
             ))}
           </ul>
+        )}
       </div>
     </article>
   );
@@ -170,7 +165,6 @@ export default function Projects({ all = false }: { all?: boolean }) {
   return (
     <section className="project-section">
       <Title level={all ? 1 : 2}>Projects</Title>
-      {all && <p className="project-desc">Projects by Yuvraj Satyapal, a Software Engineer and Full Stack Developer in Delhi, India. Other projects include InsightSpend. I’m currently building MindMora.</p>}
       {projects.map((p) => (
         <ProjectCard key={p.id} project={p} headingLevel={all ? 2 : 3} />
       ))}

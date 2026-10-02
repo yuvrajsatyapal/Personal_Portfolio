@@ -7,11 +7,11 @@ const personId = `${origin}/#person`;
 const websiteId = `${origin}/#website`;
 const pages: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Yuvraj Satyapal | Software Engineer & Full Stack Developer",
-    description: "Official portfolio of Yuvraj Satyapal, Software Engineer and Full Stack Developer in Delhi, India. Explore React, Next.js, Node.js projects and experience.",
+    title: "Yuvraj Satyapal | Software Engineer",
+    description: "Official portfolio of Yuvraj Satyapal, Software Engineer in Delhi, India. Explore React, Next.js, Node.js projects and experience.",
   },
   "/projects": {
-    title: "Projects | Yuvraj Satyapal — Full Stack Developer",
+    title: "Projects | Yuvraj Satyapal — Software Engineer",
     description: "Explore Yuvraj Satyapal’s projects: FlowBoard, Trimly and AvoChat. Real-time collaboration, URL analytics and chat built with React, Next.js and Node.js.",
   },
   "/resume": {
@@ -20,11 +20,11 @@ const pages: Record<string, { title: string; description: string }> = {
   },
   "/analytics": {
     title: "Portfolio Analytics | Yuvraj Satyapal",
-    description: "Public visitor and page-view analytics for the official portfolio of Yuvraj Satyapal, Software Engineer and Full Stack Developer in Delhi, India.",
+    description: "Public visitor and page-view analytics for the official portfolio of Yuvraj Satyapal, Software Engineer in Delhi, India.",
   },
   "/support": {
     title: "Support | Yuvraj Satyapal",
-    description: "Support the work of Yuvraj Satyapal, Software Engineer and Full Stack Developer. Explore his projects and connect through his official public profiles.",
+    description: "Support the work of Yuvraj Satyapal, Software Engineer. Explore his projects and connect through his official public profiles.",
   },
 };
 export function getSeo(pathname: string) {
@@ -44,7 +44,7 @@ export function getStructuredData(pathname: string) {
     {
       "@type": "Person", "@id": personId,
       name: profile.name, url: profile.siteUrl, image: page.image,
-      jobTitle: "Software Engineer / Full Stack Developer",
+      jobTitle: "Software Engineer",
       description: profile.bio,
       address: { "@type": "PostalAddress", addressLocality: "Delhi", addressCountry: "IN" },
       alumniOf: { "@type": "CollegeOrUniversity", name: education.institute },
@@ -54,7 +54,7 @@ export function getStructuredData(pathname: string) {
         description: `B.Tech in Information Technology, graduation 2026, ${education.grade}.`,
         recognizedBy: { "@type": "CollegeOrUniversity", name: education.institute },
       },
-      knowsAbout: [...new Set([...skills, ...tools].map(skill => skill.name))],
+      knowsAbout: [...new Set([...skills, ...tools].map(skill => skill.name).concat("REST APIs"))],
       sameAs: [...socials.flatMap(social => social.url ? [social.url] : []), profile.handleUrl],
     },
     {
