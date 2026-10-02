@@ -1,30 +1,32 @@
-import { profile, education, skills, tools, socials } from "../data/portfolio";
+import { profile, education, experience, projects, skills, tools, socials } from "../data/portfolio";
 
 export const publicRoutes = ["/", "/projects", "/resume", "/analytics", "/support"] as const;
 export const siteOrigin = new URL(profile.siteUrl).origin;
 const origin = siteOrigin;
 const personId = `${origin}/#person`;
 const websiteId = `${origin}/#website`;
+// Use the same introduction rendered on the home page, without Markdown emphasis.
+const visibleBio = profile.bioLines.map(line => line.replace(/\*\*/g, "")).join(" ");
 const pages: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Yuvraj Satyapal | Software Engineer",
-    description: "Official portfolio of Yuvraj Satyapal, Software Engineer in Delhi, India. Explore React, Next.js, Node.js projects and experience.",
+    title: `${profile.name} | ${profile.role}`,
+    description: `${profile.name}, ${profile.role} based in ${profile.location}. ${visibleBio.replace(/^Hi, I’m a [^.]+\.\s*/, "")}`,
   },
   "/projects": {
-    title: "Projects | Yuvraj Satyapal — Software Engineer",
-    description: "Explore Yuvraj Satyapal’s projects: FlowBoard, Trimly and AvoChat. Real-time collaboration, URL analytics and chat built with React, Next.js and Node.js.",
+    title: `Projects | ${profile.name} — ${profile.role}`,
+    description: `Explore ${profile.name}’s projects: ${projects.map(project => project.name).join(", ")}. Real-time Kanban collaboration, URL shortening and real-time chat.`,
   },
   "/resume": {
-    title: "Resume & Experience | Yuvraj Satyapal — Software Engineer",
-    description: "Yuvraj Satyapal’s resume: Full Stack Developer Intern at Arabazaar, B.Tech IT at GGSIPU, graduating in 2026 with CGPA 8.5. Skills, projects and achievements.",
+    title: `Resume & Experience | ${profile.name} — ${profile.role}`,
+    description: `${profile.name}’s resume. ${experience.map(item => `${item.role} at ${item.company}`).join("; ")}. ${education.degree}, ${education.dates}, ${education.grade}.`,
   },
   "/analytics": {
-    title: "Portfolio Analytics | Yuvraj Satyapal",
-    description: "Public visitor and page-view analytics for the official portfolio of Yuvraj Satyapal, Software Engineer in Delhi, India.",
+    title: `Portfolio Analytics | ${profile.name}`,
+    description: `Visitors and page views for ${profile.name}’s portfolio, with activity over the past 24 hours, 7 days and 30 days.`,
   },
   "/support": {
-    title: "Support | Yuvraj Satyapal",
-    description: "Support the work of Yuvraj Satyapal, Software Engineer. Explore his projects and connect through his official public profiles.",
+    title: `Support | ${profile.name}`,
+    description: `If ${profile.name}’s work has helped you, explore the support options on this page, including quick support, UPI and crypto.`,
   },
 };
 export function getSeo(pathname: string) {
@@ -44,14 +46,14 @@ export function getStructuredData(pathname: string) {
     {
       "@type": "Person", "@id": personId,
       name: profile.name, url: profile.siteUrl, image: page.image,
-      jobTitle: "Software Engineer",
-      description: profile.bio,
-      address: { "@type": "PostalAddress", addressLocality: "Delhi", addressCountry: "IN" },
+      jobTitle: profile.role,
+      description: visibleBio,
+      address: { "@type": "PostalAddress", addressLocality: profile.location.split(",")[0].trim(), addressCountry: "IN" },
       alumniOf: { "@type": "CollegeOrUniversity", name: education.institute },
       hasCredential: {
         "@type": "EducationalOccupationalCredential", name: education.degree,
         credentialCategory: "Bachelor’s degree",
-        description: `B.Tech in Information Technology, graduation 2026, ${education.grade}.`,
+        description: `${education.degree}, ${education.dates}, ${education.grade}.`,
         recognizedBy: { "@type": "CollegeOrUniversity", name: education.institute },
       },
       knowsAbout: [...new Set([...skills, ...tools].map(skill => skill.name).concat("REST APIs"))],
@@ -59,7 +61,7 @@ export function getStructuredData(pathname: string) {
     },
     {
       "@type": "WebSite", "@id": websiteId,
-      url: profile.siteUrl, name: "Yuvraj Satyapal — Official Portfolio",
+      url: profile.siteUrl, name: profile.name,
       description: pages["/"].description, inLanguage: "en-IN", publisher: { "@id": personId },
     },
   ];
@@ -79,7 +81,7 @@ export function renderSeoHead(pathname: string) {
     `<title>${escapeHtml(page.title)}</title>`,
     meta("description", page.description), meta("author", profile.name), meta("robots", page.robots),
     ...(page.canonical ? [`<link rel="canonical" href="${escapeHtml(page.canonical)}" data-seo />`] : []),
-    meta("og:type", "website", true), meta("og:site_name", "Yuvraj Satyapal — Official Portfolio", true),
+    meta("og:type", "website", true), meta("og:site_name", profile.name, true),
     meta("og:title", page.title, true), meta("og:description", page.description, true),
     ...(page.canonical ? [meta("og:url", page.canonical, true)] : []),
     meta("og:image", page.image, true), meta("og:image:alt", "Portrait of Yuvraj Satyapal", true),
