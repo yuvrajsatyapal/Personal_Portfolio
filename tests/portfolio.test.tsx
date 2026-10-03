@@ -10,6 +10,59 @@ const open = (path = "/") =>
     </MemoryRouter>,
   );
 describe("portfolio flows", () => {
+  it("shows the reference development indicator only for MindMora", () => {
+    open();
+    const card = document.querySelector("#project-mindmora")! as HTMLElement;
+    const indicator = within(card).getByLabelText("Under development");
+    expect(indicator).toHaveAttribute("aria-describedby", "development-mindmora");
+    expect(within(card).getByRole("tooltip", { hidden: true })).toHaveTextContent("Functionality might not work properly");
+    expect(within(card).getByRole("tooltip", { hidden: true })).toHaveTextContent("Currently Building This Project, So its Under Development");
+    expect(screen.getAllByLabelText("Under development")).toHaveLength(1);
+  });
+  it("links the experience company to Arabazaar", () => {
+    open();
+    expect(screen.getByRole("link", { name: "Visit Arabazaar website" })).toHaveAttribute(
+      "href", "https://arabazaar.com/",
+    );
+  });
+  it.each(["/", "/home"])("shows exactly three ordered projects on %s", (path) => {
+    open(path);
+    const cards = document.querySelectorAll(".home-container .project-card");
+    expect(Array.from(cards).map(card => card.querySelector("h3")?.textContent)).toEqual([
+      "FlowBoard", "MindMora", "Trimly",
+    ]);
+  });
+  it.each(["/", "/home"])("orders home sections without Education on %s", (path) => {
+    open(path);
+    const sections = Array.from(document.querySelectorAll(".home-container > section"));
+    const names = sections.slice(1).map(section => section.querySelector("h2")?.textContent);
+    expect(names).toEqual([
+      "Experience", "Projects", "Skills", "GitHub Contributions",
+      "LeetCode Activity", "Analytics", "Let's Connect",
+    ]);
+    expect(screen.queryByRole("heading", { name: "Education" })).not.toBeInTheDocument();
+  });
+  it.each(["/", "/home"])("omits Education from %s", (path) => {
+    open(path);
+    expect(screen.queryByRole("heading", { name: "Education" })).not.toBeInTheDocument();
+  });
+  it("links the MindMora logo to its repository", () => {
+    open();
+    expect(screen.getByRole("link", { name: "MindMora logo" })).toHaveAttribute(
+      "href", "https://github.com/yuvrajsatyapal/MindMora",
+    );
+  });
+  it("shows GitHub and LeetCode profile cards without the hero social row", () => {
+    open();
+    const hero = document.querySelector("#about")!;
+    const links = within(hero as HTMLElement);
+    expect(links.getByRole("link", { name: /GitHub.*Profile/ })).toHaveAttribute(
+      "href", "https://github.com/yuvrajsatyapal",
+    );
+    expect(links.getByRole("link", { name: /LeetCode.*Profile/ })).toBeVisible();
+    expect(hero.querySelector(".contact-me")).toBeNull();
+    expect(within(document.querySelector("#contact")! as HTMLElement).getByRole("link", { name: "LinkedIn" })).toBeVisible();
+  });
   it.each(["/", "/home"])("shows Analytics below LeetCode on %s", (path) => {
     open(path);
     const leetcode = screen.getByRole("heading", { name: "LeetCode Activity" });
@@ -27,6 +80,7 @@ describe("portfolio flows", () => {
       }),
     );
     expect(screen.getByText("AvoChat")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "MindMora" })).toBeVisible();
     expect(screen.queryByText("InsightSpend")).not.toBeInTheDocument();
   });
   it("expands experience with keyboard-accessible controls", async () => {

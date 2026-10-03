@@ -39,11 +39,6 @@ export function Resume() {
               src={profile.resumePreview}
             />
           </div>
-          <div className="mobile-resume-link">
-            <External className="resume-mobile-btn" href={profile.resume}>
-              View / Download PDF <Icon name="external" />
-            </External>
-          </div>
         </>
       ) : (
         <div className="resume-summary">

@@ -44,7 +44,8 @@ for name, (x,y,w,h) in frames.items():
     for py in range(image.height):
         for px in range(image.width):
             color = source.getpixel((x+px*5+2,y+py*5+2))
-            image.putpixel((px,py), (0,0,0,0) if color == (0,150,136) else (*color,255))
+            background = all(abs(color[i] - channel) <= 2 for i, channel in enumerate((0, 150, 136)))
+            image.putpixel((px,py), (0,0,0,0) if background else (*color,255))
     points = {(x,y) for y in range(image.height) for x in range(image.width) if image.getpixel((x,y))[3]}
     groups = []
     while points:

@@ -11,7 +11,6 @@ import {
   Hero,
   Skills,
   Experience,
-  Education,
 } from "./components/HomeSections";
 import Projects from "./components/Projects";
 import Seo from "./components/Seo";
@@ -58,10 +57,9 @@ export default function App({ client }: { client?: QueryClient } = {}) {
             element={
               <div className="home-container">
                 <Hero />
-                <Skills />
                 <Experience />
-                <Education />
                 <Projects />
+                <Skills />
                 <Activity platform="github" />
                 <Activity />
                 <Analytics embedded />
@@ -74,10 +72,9 @@ export default function App({ client }: { client?: QueryClient } = {}) {
             element={
               <div className="home-container">
                 <Hero />
-                <Skills />
                 <Experience />
-                <Education />
                 <Projects />
+                <Skills />
                 <Activity platform="github" />
                 <Activity />
                 <Analytics embedded />

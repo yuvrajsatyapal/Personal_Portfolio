@@ -59,7 +59,8 @@ for (const [route, document] of documents) {
   }
 }
 const homeText = documents.get("/").querySelector("main").textContent;
-for (const text of ["Yuvraj Satyapal", "Software Engineer", "Full Stack Developer", "Delhi, India", "Arabazaar", "FlowBoard", "Trimly", "AvoChat"]) assert.ok(homeText.includes(text), `Missing crawlable profile text: ${text}`);
+for (const text of ["Yuvraj Satyapal", "Software Engineer", "Full Stack Developer", "Delhi, India", "Arabazaar", "FlowBoard", "MindMora", "Trimly"]) assert.ok(homeText.includes(text), `Missing crawlable profile text: ${text}`);
+assert.ok(documents.get("/projects").querySelector("main").textContent.includes("AvoChat"), "Missing AvoChat on the full Projects page");
 const sitemap = new JSDOM(await readFile("dist/sitemap.xml", "utf8"), { contentType: "text/xml" }).window.document;
 assert.deepEqual([...sitemap.querySelectorAll("loc")].map(node => node.textContent), routes.map(route => new URL(route, origin).href));
 const robots = await readFile("dist/robots.txt", "utf8");

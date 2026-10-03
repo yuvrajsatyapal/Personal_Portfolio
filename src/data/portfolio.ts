@@ -8,8 +8,9 @@ export interface Project {
   live: string | null;
   image: string;
   video?: string;
-  imageKind?: "screenshot" | "concept";
+  imageKind?: "screenshot" | "concept" | "logo";
   featured?: boolean;
+  underDevelopment?: boolean;
 }
 // Upload new versions to this same Drive file to update the resume without code changes.
 const resumeDriveFileId = "1r62uOgG4HibN1NIZ8D85VGCCoWA0LK2J";
@@ -64,6 +65,7 @@ export const education = {
 export const experience = [
   {
     company: "Arabazaar",
+    website: "https://arabazaar.com/",
     logo: "/images/arabazaar-logo.png" as string | null,
     location: "Remote",
     role: "Full Stack Developer Intern",
@@ -111,6 +113,18 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/yuvrajsatyapal/FlowBoard",
     live: "https://flow-board-web-mu.vercel.app/",
+  },
+  {
+    id: "mindmora",
+    underDevelopment: true,
+    name: "MindMora",
+    image: "/images/mindmora-logo.png",
+    imageKind: "logo",
+    description: "Currently in development. Follow the progress on GitHub.",
+    tech: [],
+    highlights: [],
+    github: "https://github.com/yuvrajsatyapal/MindMora",
+    live: null,
   },
   {
     id: "trimly",

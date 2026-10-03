@@ -2,6 +2,12 @@ import { describe, expect, it } from "vitest";
 import { getSeo, getStructuredData, publicRoutes, renderSeoHead } from "../src/lib/seo";
 
 describe("portfolio SEO", () => {
+  it("omits education from metadata and structured data", () => {
+    for (const path of publicRoutes) {
+      const head = renderSeoHead(path);
+      expect(head).not.toMatch(/CollegeOrUniversity|EducationalOccupationalCredential|alumniOf|hasCredential|Bachelor|CGPA|Akhilesh/);
+    }
+  });
   it("uses the configured production domain and one canonical per route", () => {
     expect(getSeo("/home").canonical).toBe("https://yuvraj-satyapal.vercel.app/");
     for (const path of publicRoutes) {

@@ -74,11 +74,29 @@ p {
   font-weight: 600;
   font-size: 14px;
 }
-.tiny-status-dot {
-  width: 6px;
-  height: 6px;
-  background: #888;
-  border-radius: 50%;
+.mindmora-status-link {
+  display: inline-flex;
+  align-items: center;
+}
+.mindmora-status-logo {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 3px rgb(0 150 136 / 65%));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mindmora-status-logo {
+    animation: mindmora-logo-glow 3s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+}
+@keyframes mindmora-logo-glow {
+  0%, 50%, 100% {
+    filter: drop-shadow(0 0 3px rgb(0 150 136 / 0%));
+  }
+  25% {
+    filter: drop-shadow(0 0 3px rgb(0 150 136 / 65%));
+  }
 }
 .heart {
   color: #ef4444;
@@ -108,6 +126,11 @@ p {
 .leetcode-logo {
   background: #fff;
   color: #111;
+  font-size: 25px;
+}
+.github-logo {
+  background: #1a1b1c;
+  color: #fff;
   font-size: 25px;
 }
 :root[data-theme="light"] .leetcode-logo { background: #000; }
@@ -161,6 +184,7 @@ p {
   font-size: 26px;
 }
 .twitter-card-left > svg,
+.github-logo > svg,
 .leetcode-logo > svg {
   width: 22px;
   height: 22px;
@@ -210,6 +234,17 @@ p {
 .exp-header-right {
   margin-left: auto;
 }
+:root[data-theme="light"] .exp-company-link { color: #303538; }
+.exp-company-link {
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.exp-company-link > svg {
+  width: 12px;
+  height: 12px;
+}
 .education-card {
   display: flex;
   gap: 14px;
@@ -249,6 +284,56 @@ p {
   font-size: 11px;
   text-align: left;
   padding: 8px 0 0;
+}
+.project-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.project-development {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  color: #1ef801;
+  cursor: help;
+}
+.project-development > svg { width: 14px; height: 14px; }
+.project-development:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
+.project-development-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  z-index: 10;
+  width: max-content;
+  min-width: 200px;
+  padding: 8px 12px;
+  background: #fff;
+  color: #333;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -8px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  visibility: hidden;
+  pointer-events: none;
+}
+.project-development-tooltip > span { display: block; }
+.project-development-tooltip > span:first-child { color: #dc2626; margin-bottom: 2px; }
+.project-development-tooltip > span:last-child { color: #666; font-size: 10px; }
+.project-development:hover .project-development-tooltip,
+.project-development:focus .project-development-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-development-tooltip { transition: none; transform: translateX(-50%); }
 }
 .project-expand:hover {
   color: #fff;
@@ -688,12 +773,8 @@ select option {
   .resume-summary {
     padding: 20px;
   }
-  .resume-viewer {
-    display: none;
-  }
-  .mobile-resume-link {
-    display: flex;
-    justify-content: center;
+  .resume-iframe {
+    min-height: 70svh;
   }
   .project-expand {
     font-size: 10px;

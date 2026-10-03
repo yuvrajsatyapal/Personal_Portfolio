@@ -12,7 +12,6 @@ import {
 import { Clock, External, Title } from "./Shared";
 import Icon from "./Icon";
 export function Hero() {
-  const [tooltipsDismissed, setTooltipsDismissed] = useState(false);
   return (
     <section id="about" className="hero-section">
       <div className="hero-section-banner-outer">
@@ -47,7 +46,18 @@ export function Hero() {
               </p>
               <p className="hero-section-profile-status-row">
                 <Link to="/projects">{profile.status}</Link>
-                <span className="tiny-status-dot" />
+                <External
+                  href="https://github.com/yuvrajsatyapal/MindMora"
+                  className="mindmora-status-link"
+                >
+                <img
+                  className="mindmora-status-logo"
+                  src="/images/mindmora-logo.png"
+                  alt="MindMora logo"
+                  width={28}
+                  height={28}
+                />
+                </External>
               </p>
               <div className="hero-section-profile-meta-row">
                 <span className="hero-section-profile-meta">
@@ -85,15 +95,23 @@ export function Hero() {
         </ul>
         <div className="hero-divider" />
         <div className="community-links">
-          <External href={socials[0].url!} className="twitter-card">
-            <span className="twitter-card-left">
-              <Icon name="linkedin" colored />
+          <External href={socials[1].url!} className="discord-invite">
+            <span className="discord-invite-left github-logo">
+              <Icon name="github" />
             </span>
-            <span className="twitter-card-middle">
-              <span className="twitter-name">{profile.name}</span>
-              <span className="twitter-handle">{profile.role}</span>
+            <span className="discord-invite-middle">
+              <span className="discord-server-name">GitHub</span>
+              <span className="discord-server-stats">
+                <span className="discord-online-dot" />@
+                {achievements.githubUsername}
+              </span>
             </span>
-            <span className="twitter-follow-btn">Connect</span>
+            <span className="discord-join-btn">
+              Profile
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17 17 7M7 7h10v10" />
+              </svg>
+            </span>
           </External>
           <External href={socials[2].url!} className="discord-invite">
             <span className="discord-invite-left leetcode-logo">
@@ -114,66 +132,6 @@ export function Hero() {
             </span>
           </External>
         </div>
-        <div
-          className={"contact-me" + (tooltipsDismissed ? " tooltips-dismissed" : "")}
-          onKeyDown={event => { if (event.key === "Escape") setTooltipsDismissed(true); }}
-          onFocusCapture={() => setTooltipsDismissed(false)}
-          onMouseEnter={() => setTooltipsDismissed(false)}
-          onMouseLeave={() => setTooltipsDismissed(false)}
-        >
-          {profile.email ? (
-            <span className="contact-tooltip-wrap contact-tooltip-first">
-              <External className="contact-btn" href={"mailto:" + profile.email} describedBy="contact-tooltip-email">
-                <Icon name="email" colored />
-                <span className="sr-only">Email</span>
-              </External>
-              <span className="contact-tooltip" role="tooltip" id="contact-tooltip-email">
-                <strong>Gmail</strong><span>{profile.email}</span>
-              </span>
-            </span>
-          ) : (
-            <button
-              disabled
-              className="contact-btn"
-              title="Public email will be added"
-            >
-              <Icon name="email" colored />
-              <span className="sr-only">Email</span>
-            </button>
-          )}
-          {socials.map((s) =>
-            s.url ? (
-              <span className="contact-tooltip-wrap" key={s.name}>
-                <External className="contact-btn" href={s.url} describedBy={`contact-tooltip-${s.icon}`}>
-                  <Icon name={s.icon} colored />
-                  <span className="sr-only">{s.name}</span>
-                </External>
-                <span className="contact-tooltip" role="tooltip" id={`contact-tooltip-${s.icon}`}>
-                  <strong>{s.name}</strong><span>@{s.handle}</span>
-                </span>
-              </span>
-            ) : (
-              <button
-                key={s.name}
-                disabled
-                className="contact-btn"
-                title={s.name + " link will be added"}
-                aria-label={s.name + " link coming soon"}
-              >
-                <Icon name={s.icon} colored />
-              </button>
-            ),
-          )}
-          <span className="contact-tooltip-wrap">
-            <Link className="contact-btn" to="/resume" aria-describedby="contact-tooltip-resume">
-              <Icon name="resume" colored />
-              <span className="sr-only">Resume</span>
-            </Link>
-            <span className="contact-tooltip" role="tooltip" id="contact-tooltip-resume">
-              <strong>Resume</strong><span>{profile.name}</span>
-            </span>
-          </span>
-        </div>
       </div>
     </section>
   );
@@ -181,7 +139,7 @@ export function Hero() {
 export function Skills() {
   return (
     <section id="skills" className="skill-section">
-      <Title>Tech Stack</Title>
+      <Title>Skills</Title>
       {[skills, tools].map((row, i) => (
         <div
           className="marquee-container"
@@ -235,6 +193,12 @@ export function Experience() {
                   <div className="exp-company-info">
                     <div className="exp-company-row">
                       <h3 className="exp-company-name">{e.company}</h3>
+                      <External href={e.website} className="exp-company-link" title={`Visit ${e.company} website`}>
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M10 3V5H5V19H19V14H21V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H10ZM17.7071 7.70711L12 13.4142L10.5858 12L16.2929 6.29289L13 3H21V11L17.7071 7.70711Z" />
+                        </svg>
+                        <span className="sr-only">Visit {e.company} website</span>
+                      </External>
                       <span className={"exp-status-badge " + e.status}>
                         <span className={"exp-status-dot " + e.status}>●</span>
                         Done
