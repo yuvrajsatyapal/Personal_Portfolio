@@ -4,19 +4,8 @@ A responsive developer portfolio showcasing my projects, experience, education, 
 
 ## **Live - [View Portfolio](https://yuvraj-satyapal.vercel.app/)**
 
-## Screenshots
+## ### Portfolio Preview
 
-### Desktop
-
-![Portfolio homepage on desktop](assets/readme/home-desktop.jpg)
-
-### Projects
-
-![FlowBoard and Trimly project cards](assets/readme/projects-desktop.jpg)
-
-### Mobile
-
-![Portfolio homepage on mobile](assets/readme/home-mobile.jpg)
 
 ## Features
 
@@ -152,17 +141,17 @@ Growth percentages appear only when a nonzero previous-period total is available
 
 Open search with **Ctrl + K** on Windows/Linux or **⌘ + K** on macOS. Use **↑ / ↓** to move through results, **Enter** to open one, and **Escape** to close search.
 
-| Shortcut          | Destination                  |
-| ----------------- | ---------------------------- |
-| Shift + H         | Home                         |
-| Shift + P         | Projects                     |
-| Shift + R         | Resume                       |
-| Shift + A         | Analytics                    |
-| Shift + T         | Tech Stack                   |
-| Shift + W         | Experience                   |
-| Shift + E         | Education                    |
-| Shift + C         | Contact                      |
-| Shift + 1 / 2 / 3 | FlowBoard / Trimly / AvoChat |
+| Shortcut              | Destination                             |
+| --------------------- | --------------------------------------- |
+| Shift + H             | Home                                    |
+| Shift + P             | Projects                                |
+| Shift + R             | Resume                                  |
+| Shift + A             | Analytics                               |
+| Shift + T             | Skills                                  |
+| Shift + W             | Experience                              |
+| Shift + E             | Education                               |
+| Shift + C             | Contact                                 |
+| Shift + 1 / 2 / 3 / 4 | FlowBoard / MindMora / Trimly / AvoChat |
 
 Destination shortcuts work in the empty search menu and outside editable fields. They do not interrupt an existing search query.
 
