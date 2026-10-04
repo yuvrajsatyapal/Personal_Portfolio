@@ -4,7 +4,8 @@ A responsive developer portfolio showcasing my projects, experience, education, 
 
 ## **Live - [View Portfolio](https://yuvraj-satyapal.vercel.app/)**
 
-## ### Portfolio Preview
+## Portfolio Preview
+https://github.com/yuvrajsatyapal/Personal_Portfolio/blob/main/public/videos/Screen%20Recording%202026-10-02%20at%201.02.19%E2%80%AFAM.mov
 
 
 ## Features
