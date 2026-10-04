@@ -6,7 +6,7 @@ A responsive developer portfolio showcasing my projects, experience, education, 
 
 ## Portfolio Preview
 
-https://github.com/user-attachments/assets/97aa8ee6-7275-448c-98e9-a11efc4503e0
+https://github.com/user-attachments/assets/b7102938-bf63-462d-a8d3-21d8df3e5c6c
 
 ## Features
 
