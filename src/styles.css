@@ -299,8 +299,10 @@ p {
   cursor: help;
 }
 .project-development > svg { width: 14px; height: 14px; }
+:root[data-theme="light"] .project-development { color: #168008; }
 .project-development:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
 .project-development-tooltip {
+  --tooltip-x: -50%;
   position: absolute;
   bottom: 100%;
   left: 50%;
@@ -318,7 +320,7 @@ p {
   text-align: center;
   white-space: nowrap;
   opacity: 0;
-  transform: translate(-50%, -8px);
+  transform: translate(var(--tooltip-x), -8px);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
   visibility: hidden;
   pointer-events: none;
@@ -330,10 +332,23 @@ p {
 .project-development:focus .project-development-tooltip {
   visibility: visible;
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translate(var(--tooltip-x), 0);
 }
 @media (prefers-reduced-motion: reduce) {
-  .project-development-tooltip { transition: none; transform: translateX(-50%); }
+  .project-development-tooltip { transition: none; transform: translateX(var(--tooltip-x)); }
+}
+@media (max-width: 700px) {
+  .project-title-group { position: relative; }
+  .project-development { position: static; }
+  .project-development-tooltip {
+    --tooltip-x: 0%;
+    left: 0;
+    width: min(300px, calc(100vw - 72px));
+    min-width: 0;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
 .project-expand:hover {
   color: #fff;
