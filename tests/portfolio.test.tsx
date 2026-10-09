@@ -10,14 +10,14 @@ const open = (path = "/") =>
     </MemoryRouter>,
   );
 describe("portfolio flows", () => {
-  it("shows the reference development indicator only for MindMora", () => {
+  it("shows the reference development indicator for the building projects", () => {
     open();
-    const card = document.querySelector("#project-mindmora")! as HTMLElement;
+    const card = document.querySelector("#project-hypothron-ai")! as HTMLElement;
     const indicator = within(card).getByLabelText("Under development");
-    expect(indicator).toHaveAttribute("aria-describedby", "development-mindmora");
+    expect(indicator).toHaveAttribute("aria-describedby", "development-hypothron-ai");
     expect(within(card).getByRole("tooltip", { hidden: true })).toHaveTextContent("Functionality might not work properly");
     expect(within(card).getByRole("tooltip", { hidden: true })).toHaveTextContent("Currently Building This Project, So its Under Development");
-    expect(screen.getAllByLabelText("Under development")).toHaveLength(1);
+    expect(screen.getAllByLabelText("Under development")).toHaveLength(2);
   });
   it("links the experience company to Arabazaar", () => {
     open();
@@ -29,7 +29,7 @@ describe("portfolio flows", () => {
     open(path);
     const cards = document.querySelectorAll(".home-container .project-card");
     expect(Array.from(cards).map(card => card.querySelector("h3")?.textContent)).toEqual([
-      "FlowBoard", "MindMora", "Trimly",
+      "FlowBoard", "Hypothron AI", "PitchBorn",
     ]);
   });
   it.each(["/", "/home"])("orders home sections without Education on %s", (path) => {
@@ -46,11 +46,10 @@ describe("portfolio flows", () => {
     open(path);
     expect(screen.queryByRole("heading", { name: "Education" })).not.toBeInTheDocument();
   });
-  it("links the MindMora logo to its repository", () => {
+  it("links the current building status to projects", () => {
     open();
-    expect(screen.getByRole("link", { name: "MindMora logo" })).toHaveAttribute(
-      "href", "https://github.com/yuvrajsatyapal/MindMora",
-    );
+    expect(screen.getByRole("link", { name: "Building Hypothron AI" })).toHaveAttribute("href", "/projects");
+    expect(screen.queryByText(/MindMora/)).not.toBeInTheDocument();
   });
   it("shows GitHub and LeetCode profile cards without the hero social row", () => {
     open();
@@ -80,7 +79,7 @@ describe("portfolio flows", () => {
       }),
     );
     expect(screen.getByText("AvoChat")).toBeVisible();
-    expect(screen.getByRole("heading", { name: "MindMora" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "LifeTale" })).toBeVisible();
     expect(screen.queryByText("InsightSpend")).not.toBeInTheDocument();
   });
   it("expands experience with keyboard-accessible controls", async () => {

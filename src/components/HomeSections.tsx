@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   profile,
@@ -12,6 +12,19 @@ import {
 import { Clock, External, Title } from "./Shared";
 import Icon from "./Icon";
 export function Hero() {
+  const [buildingIndex, setBuildingIndex] = useState(0);
+  const buildingName = profile.buildingProjects[buildingIndex];
+  const characterStagger = 60;
+  const entryDuration = 300;
+  const exitDuration = 240;
+  const exitStart = entryDuration + (buildingName.length - 1) * characterStagger + 2000;
+  const cycleDuration = exitStart + (buildingName.length - 1) * characterStagger + exitDuration;
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setBuildingIndex(index => (index + 1) % profile.buildingProjects.length);
+    }, cycleDuration);
+    return () => window.clearTimeout(timer);
+  }, [buildingIndex, cycleDuration]);
   return (
     <section id="about" className="hero-section">
       <div className="hero-section-banner-outer">
@@ -45,19 +58,18 @@ export function Hero() {
                 <External href={profile.handleUrl}>@{profile.handle}</External>
               </p>
               <p className="hero-section-profile-status-row">
-                <Link to="/projects">{profile.status}</Link>
-                <External
-                  href="https://github.com/yuvrajsatyapal/MindMora"
-                  className="mindmora-status-link"
-                >
-                <img
-                  className="mindmora-status-logo"
-                  src="/images/mindmora-logo.png"
-                  alt="MindMora logo"
-                  width={28}
-                  height={28}
-                />
-                </External>
+                <Link to="/projects" className="building-status-link" aria-label={`Building ${buildingName}`}>
+                  <span>Building</span>{" "}
+                  <span key={buildingIndex} className="building-status-text" aria-hidden="true">
+                    {Array.from(buildingName).map((character, index) => (
+                      <span
+                        key={index}
+                        className="building-status-character"
+                        style={{ animationDelay: `${index * characterStagger}ms, ${exitStart + index * characterStagger}ms` }}
+                      >{character}</span>
+                    ))}
+                  </span>
+                </Link>
               </p>
               <div className="hero-section-profile-meta-row">
                 <span className="hero-section-profile-meta">

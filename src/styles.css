@@ -74,29 +74,33 @@ p {
   font-weight: 600;
   font-size: 14px;
 }
-.mindmora-status-link {
-  display: inline-flex;
-  align-items: center;
+.building-status-link {
+  display: inline-block;
+  min-width: 180px;
 }
-.mindmora-status-logo {
-  width: 14px;
-  height: 14px;
-  object-fit: contain;
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 3px rgb(0 150 136 / 65%));
+.building-status-text {
+  display: inline-block;
+  white-space: pre;
+}
+.building-status-character {
+  display: inline-block;
+  white-space: pre;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .mindmora-status-logo {
-    animation: mindmora-logo-glow 3s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  .building-status-character {
+    animation-name: building-character-enter, building-character-exit;
+    animation-duration: 300ms, 240ms;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1), ease-in;
+    animation-fill-mode: both, forwards;
   }
 }
-@keyframes mindmora-logo-glow {
-  0%, 50%, 100% {
-    filter: drop-shadow(0 0 3px rgb(0 150 136 / 0%));
-  }
-  25% {
-    filter: drop-shadow(0 0 3px rgb(0 150 136 / 65%));
-  }
+@keyframes building-character-enter {
+  from { opacity: 0; transform: translateY(-0.8em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes building-character-exit {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 .heart {
   color: #ef4444;
