@@ -81,6 +81,9 @@ export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project
             src={previewLoaded ? p.video : undefined}
             poster={p.image}
             muted loop playsInline preload="none" aria-hidden="true"
+            onTimeUpdate={event => {
+              if (event.currentTarget.currentTime >= 15) event.currentTarget.currentTime = 0;
+            }}
             onError={() => { setPreviewFailed(true); stopPreview(); }}
           />
         )}
@@ -186,7 +189,7 @@ export default function Projects({ all = false }: { all?: boolean }) {
   return (
     <section className="project-section">
       <Title level={all ? 1 : 2}>Projects</Title>
-      {(all ? projects : projects.slice(0, 3)).map((p) => (
+      {(all ? projects : projects.slice(0, 4)).map((p) => (
         <ProjectCard key={p.id} project={p} headingLevel={all ? 2 : 3} />
       ))}
       {!all && (

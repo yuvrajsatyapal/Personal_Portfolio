@@ -152,7 +152,7 @@ Open search with **Ctrl + K** on Windows/Linux or **âŒ˜ + K** on macOS. Use **â†
 | Shift + W             | Experience                              |
 | Shift + E             | Education                               |
 | Shift + C             | Contact                                 |
-| Shift + 1 / 2 / 3 / 4 | FlowBoard / Hypothron AI / PitchBorn / LifeTale |
+| Shift + 1 / 2 / 3 / 4 | FlowBoard / Hypothron AI / QueryCure / PitchBorn |
 
 Destination shortcuts work in the empty search menu and outside editable fields. They do not interrupt an existing search query.
 

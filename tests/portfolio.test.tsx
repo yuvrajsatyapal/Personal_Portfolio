@@ -25,11 +25,11 @@ describe("portfolio flows", () => {
       "href", "https://arabazaar.com/",
     );
   });
-  it.each(["/", "/home"])("shows exactly three ordered projects on %s", (path) => {
+  it.each(["/", "/home"])("shows exactly four ordered projects on %s", (path) => {
     open(path);
     const cards = document.querySelectorAll(".home-container .project-card");
     expect(Array.from(cards).map(card => card.querySelector("h3")?.textContent)).toEqual([
-      "FlowBoard", "Hypothron AI", "PitchBorn",
+      "FlowBoard", "Hypothron AI", "QueryCure", "PitchBorn",
     ]);
   });
   it.each(["/", "/home"])("orders home sections without Education on %s", (path) => {
@@ -79,7 +79,7 @@ describe("portfolio flows", () => {
       }),
     );
     expect(screen.getByText("AvoChat")).toBeVisible();
-    expect(screen.getByRole("heading", { name: "LifeTale" })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "LifeTale" })).not.toBeInTheDocument();
     expect(screen.queryByText("InsightSpend")).not.toBeInTheDocument();
   });
   it("expands experience with keyboard-accessible controls", async () => {
@@ -124,4 +124,17 @@ describe("portfolio flows", () => {
     open("/missing");
     expect(screen.getByRole("heading", { name: "404" })).toBeVisible();
   });
+});
+
+ it("shows PitchBorn links and README-backed project details", async () => {
+  open("/projects");
+  const card = within(document.querySelector("#project-pitchborn")! as HTMLElement);
+  expect(card.queryByLabelText("Under development")).not.toBeInTheDocument();
+  expect(card.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+  expect(card.getByRole("link", { name: /Live/ })).toHaveAttribute("href", "https://pitch-born.vercel.app/");
+  expect(card.getByRole("link", { name: /GitHub/ })).toHaveAttribute("href", "https://github.com/yuvrajsatyapal/PitchBorn");
+  for (const tech of ["Zod", "Vitest", "Playwright"]) expect(card.getByText(tech)).toBeVisible();
+  await userEvent.click(card.getByRole("button", { name: "Details" }));
+  expect(card.getByText(/298 real clubs across 15 leagues/)).toBeVisible();
+  expect(card.getByText(/Client-side static export/)).toBeVisible();
 });
