@@ -56,7 +56,7 @@ export function Resume() {
               <p>{e.dates}</p>
               <ul>
                 {e.details.map((d) => (
-                  <li key={d}>{d}</li>
+                  <li key={d} className="experience-detail-text">{d}</li>
                 ))}
               </ul>
             </div>

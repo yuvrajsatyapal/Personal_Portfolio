@@ -7,6 +7,8 @@ import Icon from "./Icon";
 export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project; headingLevel?: 2 | 3 }) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
   const [open, setOpen] = useState(false);
+  const visibleTech = p.id === "pitchborn" || p.id === "flowboard" ? p.tech.slice(0, 4) : p.tech;
+  const remainingTech = p.tech.slice(visibleTech.length);
   const video = useRef<HTMLVideoElement>(null);
   const wantsPreview = useRef(false);
   const [previewRequested, setPreviewRequested] = useState(false);
@@ -158,27 +160,34 @@ export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project
         {p.tech.length > 0 && <>
         <span className="project-tech-label">Tech Stack:</span>
         <div className="project-tech">
-          {p.tech.map((t) => (
+          {visibleTech.map((t) => (
             <span key={t}>{t}</span>
           ))}
         </div>
+        {open && remainingTech.length > 0 && (
+          <div className="project-tech" id={"tech-details-" + p.id}>
+            {remainingTech.map(t => <span key={t}>{t}</span>)}
+          </div>
+        )}
         </>}
         {p.highlights.length > 0 && <>
         <button
           className="project-expand"
           aria-expanded={open}
-          aria-controls={"details-" + p.id}
+          aria-controls={remainingTech.length > 0 ? `tech-details-${p.id} details-${p.id}` : "details-" + p.id}
           onClick={() => setOpen(!open)}
         >
           Details{" "}
           <Icon name="chevron" className={open ? "rotated" : ""} />
         </button>
         {open && (
-          <ul className="engineering-details" id={"details-" + p.id}>
+          <div id={"details-" + p.id}>
+          <ul className="engineering-details">
             {p.highlights.map((h) => (
               <li key={h}>{h}</li>
             ))}
           </ul>
+          </div>
         )}
         </>}
       </div>

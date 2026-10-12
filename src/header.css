@@ -110,8 +110,8 @@
 /* Match the reference's one-second circular reveal from the viewport top-right. */
 ::view-transition-group(root) { animation-duration: 1s; animation-timing-function: ease; }
 ::view-transition-image-pair(root) { isolation: auto; }
-::view-transition-old(root) { animation: none; z-index: -1; }
-::view-transition-new(root) { animation: theme-reveal-top-right 1s ease both; mix-blend-mode: normal; }
+::view-transition-old(root) { animation: none; z-index: 1; mix-blend-mode: normal; }
+::view-transition-new(root) { animation: theme-reveal-top-right 1s ease both; z-index: 2; mix-blend-mode: normal; }
 @keyframes theme-reveal-top-right {
   from { clip-path: circle(0% at 100% 0%); }
   to { clip-path: circle(150% at 100% 0%); }

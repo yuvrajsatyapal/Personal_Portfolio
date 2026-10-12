@@ -30,7 +30,9 @@ export const profile = {
   handleUrl: "https://x.com/uviii_03",
   photo: "/images/yuvraj-profile.png" as string | null,
   email: "yuvrajsatyapal21@gmail.com" as string | null,
-  resume: `https://drive.google.com/file/d/${resumeDriveFileId}/view` as string | null,
+  resume: `https://drive.google.com/file/d/${resumeDriveFileId}/view` as
+    | string
+    | null,
   resumePreview: `https://drive.google.com/file/d/${resumeDriveFileId}/preview`,
   resumeDownload: `https://drive.google.com/uc?export=download&id=${resumeDriveFileId}`,
   siteUrl: "https://yuvraj-satyapal.vercel.app/",
@@ -75,8 +77,8 @@ export const experience = [
     url: null as string | null,
     initials: "A",
     details: [
-      "Delivered 7 core modules for the Admin Dashboard with Next.js, TypeScript and TanStack Query.",
-      "Built 30+ responsive components and banner sections, integrating REST APIs for dynamic content.",
+      "Built Admin Dashboard with 7 core modules using Next.js, TypeScript, and TanStack Query.",
+      "Implemented a Cloudflare backed image upload pipeline with three-layer file validation\n(extension, MIME type, and magic-byte verification) for secure media storage and retrieval.",
       "Worked with developers on feature delivery, debugging and weekly code reviews.",
     ],
   },
@@ -121,10 +123,11 @@ export const projects: Project[] = [
     underDevelopment: true,
     image: "/images/hypothron-ai.svg",
     imageKind: "logo",
-    description: "An AI project currently in development. More details coming soon.",
+    description:
+      "An AI project currently in development. More details coming soon.",
     tech: [],
     highlights: [],
-    github: null,
+    github: "https://github.com/yuvrajsatyapal/Hypothron-AI",
     live: null,
   },
   {
@@ -133,10 +136,11 @@ export const projects: Project[] = [
     underDevelopment: true,
     image: "/images/querycure.svg",
     imageKind: "logo",
-    description: "A project currently in development. More details coming soon.",
+    description:
+      "A project currently in development. More details coming soon.",
     tech: [],
     highlights: [],
-    github: null,
+    github: "https://github.com/yuvrajsatyapal/QueryCure",
     live: null,
   },
   {
@@ -145,8 +149,20 @@ export const projects: Project[] = [
     image: "/images/pitchborn-screenshot.png",
     video: "/videos/PitchBorn-Preview.mp4",
     imageKind: "screenshot",
-    description: "A free, browser-based football career simulator set in a world of real clubs, leagues and stadiums. Guide a player from academy prospect to retirement through training, live matches, transfers, trophies and international football.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Zustand", "Dexie", "IndexedDB", "Zod", "Vitest", "Playwright"],
+    description:
+      "A free, browser-based football career simulator set in a world of real clubs, leagues and stadiums. Guide a player from academy prospect to retirement through training, live matches, transfers, trophies and international football.",
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Zustand",
+      "Dexie",
+      "IndexedDB",
+      "Zod",
+      "Vitest",
+      "Playwright",
+    ],
     highlights: [
       "298 real clubs across 15 leagues in England, Spain, Germany, Italy and France",
       "Weekly training, player development and live match decisions or quick simulation",

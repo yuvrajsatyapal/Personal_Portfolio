@@ -232,12 +232,20 @@ export function Experience() {
                       setExpanded({ ...expanded, [i]: !expanded[i] })
                     }
                   >
-                    <Icon
+                    <svg
                       className={
                         "exp-expand-icon" + (expanded[i] ? " open" : "")
                       }
-                      name="chevron"
-                    />
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m4 8 8 8 8-8" />
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -248,7 +256,7 @@ export function Experience() {
               >
                 <ul className="exp-bullets">
                   {e.details.map((d) => (
-                    <li key={d}>{d}</li>
+                    <li key={d} className="experience-detail-text">{d}</li>
                   ))}
                 </ul>
               </div>
