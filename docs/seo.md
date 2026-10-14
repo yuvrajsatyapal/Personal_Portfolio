@@ -12,6 +12,10 @@ Resume text is included in native expandable HTML alongside the PDF viewer. Expe
 
 Responsive WebP sources supplement the original PNG files. Noncritical images have lazy loading, project images have async decoding, the profile image has high fetch priority, and image dimensions reserve space. Existing layout and interactive previews remain in place. The original public PNG portrait is retained as a social-card image.
 
+## Search thumbnail preference
+
+The homepage metadata prefers `/images/yuvraj-profile.png`, the pixel portrait, over project screenshots. Open Graph and Twitter tags use it, and the JSON-LD graph describes it as an `ImageObject` with its real 1122×1402 dimensions. The homepage `ProfilePage` references that object through `primaryImageOfPage`. Search engines still choose and cache result thumbnails independently, so this is a strong preference signal rather than a guaranteed or immediate display change.
+
 Vercel uses `cleanUrls` to serve the generated HTML at extensionless paths, redirects `/home` and `/index.html` to `/`, and removes trailing slashes. The former blanket SPA rewrite was removed so unknown server requests can return an actual 404 using the generated `404.html`. Missing routes use noindex metadata and are excluded from the sitemap. The APIs and static assets are no longer rewritten to the homepage.
 
 ## Files changed

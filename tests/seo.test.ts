@@ -32,4 +32,18 @@ describe("portfolio SEO", () => {
     expect(page.mainEntity).toEqual({ "@id": person["@id"] });
     expect(JSON.parse(JSON.stringify(getStructuredData("/")))["@context"]).toBe("https://schema.org");
   });
+  it("declares the pixel portrait as the homepage primary image", () => {
+    const portraitUrl = "https://yuvraj-satyapal.vercel.app/images/yuvraj-profile.png";
+    const graph = getStructuredData("/")["@graph"];
+    const image = graph.find(node => node["@type"] === "ImageObject")!;
+    const page = graph.find(node => node["@type"] === "ProfilePage")!;
+
+    expect(getSeo("/").image).toBe(portraitUrl);
+    expect(image).toMatchObject({
+      contentUrl: portraitUrl,
+      width: 1122,
+      height: 1402,
+    });
+    expect(page.primaryImageOfPage).toEqual({ "@id": image["@id"] });
+  });
 });

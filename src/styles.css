@@ -210,13 +210,43 @@ p {
 .primary-skill {
   font-weight: 600;
 }
-:root[data-theme="light"] .skill-icon:is([data-icon="nextjs"], [data-icon="socketio"], [data-icon="express"], [data-icon="github"]) svg { color: #17191a; }
+:root[data-theme="light"] .skill-icon:is([data-icon="nextjs"], [data-icon="socketio"], [data-icon="express"], [data-icon="github"], [data-icon="vercel"]) svg { color: #17191a; }
 :root[data-theme="light"] .skill-icon svg { filter: saturate(1.35); }
 :root[data-theme="light"] .skill-icon:is([data-icon="prisma"], [data-icon="database"]) svg { color: #0089b8; }
 :root[data-theme="light"] .skill-icon[data-icon="react"] svg { color: #00a8de; }
 :root[data-theme="light"] .skill-icon[data-icon="javascript"] svg { color: #f2c900; }
 :root[data-theme="light"] .skill-icon[data-icon="tailwind"] svg { color: #00a9dc; }
 :root[data-theme="light"] .skill-icon[data-icon="nodejs"] svg { color: #279d43; }
+:root[data-theme="light"] .skill-icon[data-icon="rust"] svg { color: #b7412e; }
+:root[data-theme="light"] .skill-icon[data-icon="numpy"] svg { color: #013243; }
+:root[data-theme="light"] .skill-icon[data-icon="pandas"] svg { color: #150458; }
+.skill-icon .brand-logo-image {
+  display: block;
+  width: 1.12em;
+  height: 1.12em;
+}
+.skill-icon .figma-brand-logo {
+  display: block;
+  width: 0.78em;
+  height: 1.16em;
+  filter: none;
+}
+.skill-icon .winston-brand-logo {
+  object-fit: cover;
+  border: 1px solid #52788c;
+  border-radius: 2px;
+  background: #f1f3f3;
+}
+:root[data-theme="light"] .skill-icon .winston-brand-logo {
+  border-color: #6a8797;
+  filter: contrast(1.08);
+}
+.skill-icon .linux-brand-logo {
+  object-fit: contain;
+  border: 0;
+  background: transparent;
+  filter: none;
+}
 .marquee-container:focus-within .marquee {
   animation-play-state: paused;
 }

@@ -53,9 +53,12 @@ import {
   SiNginx,
   SiGithubactions,
   SiCloudinary,
-  SiFigma,
-  SiCanvas,
   SiJsonwebtokens,
+  SiRust,
+  SiVercel,
+  SiSupabase,
+  SiNumpy,
+  SiPandas,
 } from "react-icons/si";
 const icons: Record<string, IconType> = {
   github: FaGithub,
@@ -85,9 +88,12 @@ const icons: Record<string, IconType> = {
   git: SiGit,
   nginx: SiNginx,
   githubactions: SiGithubactions,
+  rust: SiRust,
+  vercel: SiVercel,
+  supabase: SiSupabase,
+  numpy: SiNumpy,
+  pandas: SiPandas,
   cloudinary: SiCloudinary,
-  figma: SiFigma,
-  canva: SiCanvas,
   jwt: SiJsonwebtokens,
   code: FaCode,
   lock: FaLock,
@@ -139,6 +145,63 @@ export default function Icon({
         <path d="M13.5 1.5 4.3 11.4" stroke="#60666d" />
         <path d="m17.9 9.4-3.5-2.8c-1.8-1.5-4.8-1.3-6.3.3l-3.8 4.5c-1.7 1.8-1.5 4.3.2 6l4.3 4.2c1.7 1.6 4.4 1.6 6.2-.1l2.4-2.4" stroke="#ffa116" />
         <path d="M10.6 14.2h10.2" stroke="#92999f" />
+      </svg>
+    );
+  }
+  if (name === "linux") {
+    return (
+      <img
+        src="/images/linux-logo.svg"
+        alt=""
+        aria-hidden="true"
+        className={["brand-logo-image", "linux-brand-logo", className].filter(Boolean).join(" ")}
+        width="24"
+        height="24"
+        loading="lazy"
+      />
+    );
+  }
+  if (name === "winston") {
+    return (
+      <img
+        src="/images/winston-logo.png"
+        alt=""
+        aria-hidden="true"
+        className={["brand-logo-image", "winston-brand-logo", className].filter(Boolean).join(" ")}
+        width="24"
+        height="24"
+        loading="lazy"
+      />
+    );
+  }
+  if (name === "canva") {
+    return (
+      <img
+        src="/images/canva-logo.png"
+        alt=""
+        aria-hidden="true"
+        className={["brand-logo-image", "canva-brand-logo", className].filter(Boolean).join(" ")}
+        width="24"
+        height="24"
+        loading="lazy"
+      />
+    );
+  }
+  if (name === "figma") {
+    return (
+      <svg
+        viewBox="0 0 38 57"
+        width="1em"
+        height="1em"
+        aria-hidden="true"
+        className={["figma-brand-logo", className].filter(Boolean).join(" ")}
+        data-brand="figma"
+      >
+        <path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 1 9.5 0H19v19H9.5A9.5 9.5 0 0 1 0 9.5Z" />
+        <path fill="#FF7262" d="M19 0h9.5a9.5 9.5 0 1 1 0 19H19V0Z" />
+        <path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5Z" />
+        <path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z" />
+        <path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0Z" />
       </svg>
     );
   }

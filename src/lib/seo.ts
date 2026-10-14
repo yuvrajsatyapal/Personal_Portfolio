@@ -18,6 +18,7 @@ export const siteOrigin = new URL(profile.siteUrl).origin;
 const origin = siteOrigin;
 const personId = `${origin}/#person`;
 const websiteId = `${origin}/#website`;
+const portraitId = `${origin}/#primaryimage`;
 // Use the same introduction rendered on the home page, without Markdown emphasis.
 const visibleBio = profile.bioLines
   .map((line) => line.replace(/\*\*/g, ""))
@@ -67,7 +68,7 @@ export function getStructuredData(pathname: string) {
       "@id": personId,
       name: profile.name,
       url: profile.siteUrl,
-      image: page.image,
+      image: { "@id": portraitId },
       jobTitle: profile.role,
       description: visibleBio,
       address: {
@@ -94,6 +95,15 @@ export function getStructuredData(pathname: string) {
       inLanguage: "en-IN",
       publisher: { "@id": personId },
     },
+    {
+      "@type": "ImageObject",
+      "@id": portraitId,
+      url: page.image,
+      contentUrl: page.image,
+      width: 1122,
+      height: 1402,
+      caption: `Pixel portrait of ${profile.name}`,
+    },
   ];
   if (page.canonical)
     graph.push({
@@ -110,6 +120,9 @@ export function getStructuredData(pathname: string) {
       inLanguage: "en-IN",
       isPartOf: { "@id": websiteId },
       mainEntity: { "@id": personId },
+      ...(page.path === "/"
+        ? { primaryImageOfPage: { "@id": portraitId } }
+        : {}),
     });
   return { "@context": "https://schema.org", "@graph": graph };
 }

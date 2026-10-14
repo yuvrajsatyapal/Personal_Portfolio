@@ -42,6 +42,39 @@ describe("portfolio flows", () => {
     ]);
     expect(screen.queryByRole("heading", { name: "Education" })).not.toBeInTheDocument();
   });
+  it("lists the extended skill set with matching brand marks", () => {
+    open();
+    const section = document.querySelector("#skills")! as HTMLElement;
+
+    for (const [name, icon] of [
+      ["Linux", "linux"],
+      ["Rust", "rust"],
+      ["Vercel", "vercel"],
+      ["Supabase", "supabase"],
+      ["Winston", "winston"],
+      ["NumPy", "numpy"],
+      ["pandas", "pandas"],
+    ]) {
+      expect(within(section).getAllByText(name)).toHaveLength(3);
+      expect(section.querySelector(`[data-icon="${icon}"] :is(svg, img)`)).not.toBeNull();
+    }
+
+    expect(section.querySelector('[data-icon="linux"] img')).toHaveAttribute(
+      "src",
+      "/images/linux-logo.svg",
+    );
+    expect(section.querySelector('[data-icon="canva"] img')).toHaveAttribute(
+      "src",
+      "/images/canva-logo.png",
+    );
+    const figmaLogo = section.querySelector('[data-icon="figma"] svg');
+    expect(figmaLogo).toHaveAttribute("data-brand", "figma");
+    expect(figmaLogo?.querySelectorAll("path")).toHaveLength(5);
+    expect(
+      Array.from(figmaLogo?.querySelectorAll("path") ?? [], path => path.getAttribute("fill")),
+    ).toEqual(["#F24E1E", "#FF7262", "#A259FF", "#1ABCFE", "#0ACF83"]);
+    expect(section.querySelector('[data-icon="rust"]')).toHaveStyle({ color: "#f4664e" });
+  });
   it.each(["/", "/home"])("omits Education from %s", (path) => {
     open(path);
     expect(screen.queryByRole("heading", { name: "Education" })).not.toBeInTheDocument();
