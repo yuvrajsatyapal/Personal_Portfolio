@@ -5,7 +5,7 @@ export interface Project {
   tech: string[];
   highlights: string[];
   github: string | null;
-  live: string | null;
+  live?: string | null;
   image: string;
   video?: string;
   imageKind?: "screenshot" | "concept" | "logo";
@@ -134,7 +134,6 @@ export const projects: Project[] = [
       "Searchable session history with transcript copy and export",
     ],
     github: "https://github.com/yuvrajsatyapal/Lingvo",
-    live: null,
   },
   {
     id: "querycure",

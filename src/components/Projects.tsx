@@ -7,7 +7,7 @@ import Icon from "./Icon";
 export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project; headingLevel?: 2 | 3 }) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
   const [open, setOpen] = useState(false);
-  const visibleTech = p.id === "pitchborn" || p.id === "flowboard" ? p.tech.slice(0, 4) : p.tech;
+  const visibleTech = ["pitchborn", "flowboard", "lingvo"].includes(p.id) ? p.tech.slice(0, 4) : p.tech;
   const remainingTech = p.tech.slice(visibleTech.length);
   const video = useRef<HTMLVideoElement>(null);
   const wantsPreview = useRef(false);
@@ -128,7 +128,7 @@ export function ProjectCard({ project: p, headingLevel = 3 }: { project: Project
             )}
           </div>
           <div className="project-link-icons">
-            {p.live ? (
+            {p.live === undefined ? null : p.live ? (
               <External className="project-pill" href={p.live}>
                 <Icon name="external" />
                 Live
