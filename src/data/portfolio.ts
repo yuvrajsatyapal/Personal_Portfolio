@@ -118,6 +118,24 @@ export const projects: Project[] = [
     live: "https://flow-board-web-mu.vercel.app/",
   },
   {
+    id: "querycure",
+    name: "QueryCure",
+    image: "/images/querycure.svg",
+    video: "/videos/QueryCure-Preview.mp4",
+    imageKind: "logo",
+    description:
+      "An autonomous multi-agent tool that explains why a PostgreSQL query is slow, with cited evidence, then proves the fix in a disposable sandbox before it ever touches your database.",
+    tech: ["Python", "FastAPI", "LangGraph", "Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Docker"],
+    highlights: [
+      "LangGraph agents form ranked root-cause hypotheses, each citing stored evidence",
+      "Fixes are benchmarked in an isolated sandbox with interleaved, repeated runs",
+      "Deterministic rules decide verdicts, including result-set correctness checks",
+      "Sealed, replayable reports; your database is never modified",
+    ],
+    github: "https://github.com/yuvrajsatyapal/QueryCure",
+    live: "https://querycure-web.onrender.com/",
+  },
+  {
     id: "lingvo",
     name: "Lingvo",
     image: "/images/lingvo.png",
@@ -134,19 +152,6 @@ export const projects: Project[] = [
       "Searchable session history with transcript copy and export",
     ],
     github: "https://github.com/yuvrajsatyapal/Lingvo",
-  },
-  {
-    id: "querycure",
-    name: "QueryCure",
-    underDevelopment: true,
-    image: "/images/querycure.svg",
-    imageKind: "logo",
-    description:
-      "A project currently in development. More details coming soon.",
-    tech: [],
-    highlights: [],
-    github: "https://github.com/yuvrajsatyapal/QueryCure",
-    live: null,
   },
   {
     id: "pitchborn",
