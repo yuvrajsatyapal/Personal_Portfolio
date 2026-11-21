@@ -81,7 +81,7 @@ describe("portfolio flows", () => {
   });
   it("links the current building status to projects", () => {
     open();
-    expect(screen.getByRole("link", { name: "Building Hypothron AI" })).toHaveAttribute("href", "/projects");
+    expect(screen.getByRole("link", { name: "Building QueryCure" })).toHaveAttribute("href", "https://github.com/yuvrajsatyapal/QueryCure");
     expect(screen.queryByText(/MindMora/)).not.toBeInTheDocument();
   });
   it("shows GitHub and LeetCode profile cards without the hero social row", () => {

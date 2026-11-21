@@ -81,6 +81,16 @@ p {
 .building-status-text {
   display: inline-block;
   white-space: pre;
+  background: linear-gradient(#3cc3b4, #3cc3b4) no-repeat 0 100% / 0 1.5px;
+  transition: background-size 0.3s ease, color 0.2s ease;
+}
+.building-status-link:hover .building-status-text,
+.building-status-link:focus-visible .building-status-text {
+  background-size: 100% 1.5px;
+  color: #3cc3b4;
+}
+@media (prefers-reduced-motion: reduce) {
+  .building-status-text { transition: none; }
 }
 .building-status-character {
   display: inline-block;
@@ -92,6 +102,14 @@ p {
     animation-duration: 300ms, 240ms;
     animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1), ease-in;
     animation-fill-mode: both, forwards;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .building-status-static .building-status-character {
+    animation-name: building-character-enter;
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation-fill-mode: both;
   }
 }
 @keyframes building-character-enter {

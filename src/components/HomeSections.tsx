@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import {
   profile,
   socials,
@@ -19,12 +18,14 @@ export function Hero() {
   const exitDuration = 240;
   const exitStart = entryDuration + (buildingName.length - 1) * characterStagger + 2000;
   const cycleDuration = exitStart + (buildingName.length - 1) * characterStagger + exitDuration;
+  const isRotating = profile.buildingProjects.length > 1;
   useEffect(() => {
+    if (!isRotating) return;
     const timer = window.setTimeout(() => {
       setBuildingIndex(index => (index + 1) % profile.buildingProjects.length);
     }, cycleDuration);
     return () => window.clearTimeout(timer);
-  }, [buildingIndex, cycleDuration]);
+  }, [buildingIndex, cycleDuration, isRotating]);
   return (
     <section id="about" className="hero-section">
       <div className="hero-section-banner-outer">
@@ -58,9 +59,9 @@ export function Hero() {
                 <External href={profile.handleUrl}>@{profile.handle}</External>
               </p>
               <p className="hero-section-profile-status-row">
-                <Link to="/projects" className="building-status-link" aria-label={`Building ${buildingName}`}>
+                <a href="https://github.com/yuvrajsatyapal/QueryCure" target="_blank" rel="noopener noreferrer" className="building-status-link" aria-label={`Building ${buildingName}`}>
                   <span>Building</span>{" "}
-                  <span key={buildingIndex} className="building-status-text" aria-hidden="true">
+                  <span key={buildingIndex} className={isRotating ? "building-status-text" : "building-status-text building-status-static"} aria-hidden="true">
                     {Array.from(buildingName).map((character, index) => (
                       <span
                         key={index}
@@ -69,7 +70,7 @@ export function Hero() {
                       >{character}</span>
                     ))}
                   </span>
-                </Link>
+                </a>
               </p>
               <div className="hero-section-profile-meta-row">
                 <span className="hero-section-profile-meta">
